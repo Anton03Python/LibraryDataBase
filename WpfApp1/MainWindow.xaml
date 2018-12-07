@@ -1,0 +1,40 @@
+﻿<Window x:Class="WpfApp1.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfApp1"
+        mc:Ignorable="d"
+        Title="Library database" Height="450" Width="800" Icon="icons8-библиотека-96.png">
+    <Grid >
+        <Grid Name="MainMenu">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="60*"/>
+                <RowDefinition Height="243*"/>
+                <RowDefinition Height="60*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="80*"/>
+                <ColumnDefinition Width="200*"/>
+                <ColumnDefinition Width="80*"/>
+            </Grid.ColumnDefinitions>
+            <Border BorderBrush="#FFE1127F" BorderThickness="1" Grid.Column="1" HorizontalAlignment="Left" Height="260" Margin="10,10,0,0" Grid.Row="1" VerticalAlignment="Top" Width="420">
+                <StackPanel Orientation="Vertical" HorizontalAlignment="Left" Width="419" Margin="0,-1,-1,-1">
+                    <Label Content="Авторизация" VerticalAlignment="Top" Margin="144,9,144,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="20" Foreground="#FFE1127F"/>
+                    <Label Content="Логин:" Margin="144,10,144,0" VerticalAlignment="Top" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="18" RenderTransformOrigin="-0.786,0.573" Height="34" Foreground="#FFE1127F"/>
+                    <TextBox Name="TextBox1" HorizontalAlignment="Left" Height="29" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="131" Margin="144,0,0,0" RenderTransformOrigin="0.483,1.622"/>
+                    <Label Content="Пароль:" Margin="144,10,144,0" VerticalAlignment="Top" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="18" RenderTransformOrigin="-0.786,0.573" Height="35" Foreground="#FFE1127F"/>
+                    <PasswordBox Name="PasswordBox1" HorizontalAlignment="Left" Margin="144,0,0,0" VerticalAlignment="Top" Width="131" Height="33" RenderTransformOrigin="0.266,-4.241"/>
+                    <Button Content="Вход" Grid.Column="1" HorizontalAlignment="Left" Margin="144,17,0,0" Grid.Row="2" VerticalAlignment="Top" Width="131" Height="34" FontSize="18" Click="Button_Click" Background="#FF3498DB" Foreground="#FFE1127F"/>
+                </StackPanel>
+            </Border>
+            <Label Content="Library DataBase" Grid.Column="1" HorizontalAlignment="Left" Margin="10,29,0,0" VerticalAlignment="Top" Width="420" FontSize="20" Height="40" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="#FFE1127F"/>
+            <Image Margin="10,10,70,244" Grid.RowSpan="2" Source="icons8-библиотека-96 (1).png" Stretch="Fill"/>
+            <TextBlock HorizontalAlignment="Left" Margin="0,47,0,0" Grid.Row="2" TextWrapping="Wrap" Text="This program belongs to the library №6. All rights reserved. Developed by Python_dev" VerticalAlignment="Top" Height="22" Width="792" Grid.ColumnSpan="3"/>
+
+        </Grid>
+        <Grid Name="DataBaseMenu" Visibility="Hidden">
+            <DataGrid HorizontalAlignment="Left" Height="343" Margin="10,66,0,0" VerticalAlignment="Top" Width="772"/>
+        </Grid>
+    </Grid>
+</Window>
