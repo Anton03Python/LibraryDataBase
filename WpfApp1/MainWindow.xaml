@@ -5,9 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfApp1"
         mc:Ignorable="d"
-        Title="Library database" Height="450" Width="800" Icon="icons8-библиотека-96.png">
+        Title="Library database" Height="450" Width="800" Icon="C:\Users\Buinov\source\repos\WpfApp1\WpfApp1\Icons\icons8-библиотека-96 (1).png" Loaded="Window_Loaded">
     <Grid >
-        <Grid Name="MainMenu">
+        <Grid Name="MainMenu" Visibility="Hidden">
             <Grid.RowDefinitions>
                 <RowDefinition Height="60*"/>
                 <RowDefinition Height="243*"/>
@@ -29,12 +29,27 @@
                 </StackPanel>
             </Border>
             <Label Content="Library DataBase" Grid.Column="1" HorizontalAlignment="Left" Margin="10,29,0,0" VerticalAlignment="Top" Width="420" FontSize="20" Height="40" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="#FFE1127F"/>
-            <Image Margin="10,10,70,244" Grid.RowSpan="2" Source="icons8-библиотека-96 (1).png" Stretch="Fill"/>
-            <TextBlock HorizontalAlignment="Left" Margin="0,47,0,0" Grid.Row="2" TextWrapping="Wrap" Text="This program belongs to the library №6. All rights reserved. Developed by Python_dev" VerticalAlignment="Top" Height="22" Width="792" Grid.ColumnSpan="3"/>
+            <Image Margin="10,10,70,244" Grid.RowSpan="2" Source="C:\Users\Buinov\source\repos\WpfApp1\WpfApp1\Icons\icons8-библиотека-96.png" Stretch="Fill"/>
+            <TextBlock HorizontalAlignment="Left" Margin="0,47,0,0" Grid.Row="2" TextWrapping="Wrap" Text="This program belongs to the library №6. All rights reserved. Developed by Python_dev" VerticalAlignment="Top" Height="22" Width="792" Grid.ColumnSpan="3" Foreground="#FFE1127F" FontSize="14"/>
 
         </Grid>
-        <Grid Name="DataBaseMenu" Visibility="Hidden">
-            <DataGrid HorizontalAlignment="Left" Height="343" Margin="10,66,0,0" VerticalAlignment="Top" Width="772"/>
+        <Grid Name="DataBaseMenu">
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition Height="Auto" MinHeight="35" />
+            </Grid.RowDefinitions>
+            <DataGrid AutoGenerateColumns="False" x:Name="libraryGrid" Height="312" VerticalAlignment="Top" Margin="0,62,0,0">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Binding="{Binding Книга}" Header="Книга" Width="125"/>
+                    <DataGridTextColumn Binding="{Binding Автор}" Header="Автор" Width="80"/>
+                    <DataGridTextColumn Binding="{Binding Жанр}" Header="Жанр" Width="80"/>
+                    <DataGridTextColumn Binding="{Binding Издатель}" Header="Издатель" Width="80"/>
+                </DataGrid.Columns>
+            </DataGrid>
+            <Button Content="Обновить" HorizontalAlignment="Left" Margin="230,0,0,0" Grid.Row="1" VerticalAlignment="Top" Width="105" Height="35" Click="Button_Click_1"/>
+            <Button Content="Удалить" HorizontalAlignment="Right" Margin="0,0,230,0" Grid.Row="1" VerticalAlignment="Top" Width="105" Height="35" Click="Button_Click_2"/>
+            <Image Margin="10,0,717,327" Source="icons8-книги-96.png" Stretch="Fill"/>
+
         </Grid>
     </Grid>
 </Window>
