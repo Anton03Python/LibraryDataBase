@@ -14,7 +14,9 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Configuration;
 using System.Data.SqlClient;
-
+using System.Security.Principal;
+using System.Diagnostics;
+using System.ComponentModel;
 
 namespace WpfApp1
 {
@@ -26,6 +28,8 @@ namespace WpfApp1
         string connectionString;
         SqlDataAdapter adapter;
         DataTable libraryTable;
+        
+
         public MainWindow()
         {
             InitializeComponent();
@@ -37,13 +41,15 @@ namespace WpfApp1
             if (TextBox1.Text == "admin" && PasswordBox1.Password == "admin")
             {
                 MainMenu.Visibility = Visibility.Hidden;
-                DataBaseMenu.Visibility = Visibility.Visible;
+                DataBaseMenuAdmin.Visibility = Visibility.Visible;
             }
             else
             {
-                MessageBox.Show("Вы ввели неверный логин или пароль." + "\n" + "Пожалуйста повторите попытку ещё раз.", "Ошибка авторизации", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Вы вошли как обычный пользователь." + "\n" + "Вам ограничены функции редактирования базы данных библиотеки.", "Авторизация", MessageBoxButton.OK, MessageBoxImage.Exclamation);
                 TextBox1.Clear();
                 PasswordBox1.Clear();
+                MainMenu.Visibility = Visibility.Hidden;
+                DataBaseMenuUser.Visibility = Visibility.Visible;
             }
         }
 
@@ -71,6 +77,7 @@ namespace WpfApp1
                 connection.Open();
                 adapter.Fill(libraryTable);
                 libraryGrid.ItemsSource = libraryTable.DefaultView;
+                libraryGridUser.ItemsSource = libraryTable.DefaultView;
             }
             catch (Exception ex)
             {
@@ -110,5 +117,7 @@ namespace WpfApp1
             }
             UpdateDB();
         }
+
+        
     }
 }
