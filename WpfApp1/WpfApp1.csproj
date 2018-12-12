@@ -108,13 +108,22 @@
     <Resource Include="Icons\icons8-библиотека-96 %281%29.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Icons\icons8-книги-96.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Icons\icons8-обновить-96.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Icons\icons8-удалить-96.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\icons8-администратор-96.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\icons8-пользователь-96.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\icons8-стрелка-влево-в-круге-2-96.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\icons8-книги-96 %281%29.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

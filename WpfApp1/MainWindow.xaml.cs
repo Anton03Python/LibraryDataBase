@@ -40,6 +40,8 @@ namespace WpfApp1
         {
             if (TextBox1.Text == "admin" && PasswordBox1.Password == "admin")
             {
+                TextBox1.Clear();
+                PasswordBox1.Clear();
                 MainMenu.Visibility = Visibility.Hidden;
                 DataBaseMenuAdmin.Visibility = Visibility.Visible;
             }
@@ -67,10 +69,7 @@ namespace WpfApp1
                 // установка команды на добавление для вызова хранимой процедуры 
                 adapter.InsertCommand = new SqlCommand("sp_InsertMyLibrary", connection);
                 adapter.InsertCommand.CommandType = CommandType.StoredProcedure;
-                adapter.InsertCommand.Parameters.Add(new SqlParameter("@Жанр", SqlDbType.VarChar, 50, "Жанр"));
                 adapter.InsertCommand.Parameters.Add(new SqlParameter("@Книга", SqlDbType.VarChar, 50, "Книга"));
-                adapter.InsertCommand.Parameters.Add(new SqlParameter("@Автор", SqlDbType.VarChar, 50, "Автор"));
-                adapter.InsertCommand.Parameters.Add(new SqlParameter("@Издатель", SqlDbType.VarChar, 50, "Издатель"));
                 SqlParameter parameter = adapter.InsertCommand.Parameters.Add("@Номер", SqlDbType.Int, 0, "Номер");
                 parameter.Direction = ParameterDirection.Output;
 
@@ -78,6 +77,84 @@ namespace WpfApp1
                 adapter.Fill(libraryTable);
                 libraryGrid.ItemsSource = libraryTable.DefaultView;
                 libraryGridUser.ItemsSource = libraryTable.DefaultView;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                if (connection != null)
+                    connection.Close();
+            }
+            string sq2 = "SELECT * FROM Автор";
+            libraryTable = new DataTable();
+            try
+            {
+                connection = new SqlConnection(connectionString);
+                SqlCommand command = new SqlCommand(sq2, connection);
+                adapter = new SqlDataAdapter(command);
+                adapter.InsertCommand = new SqlCommand("sp_InsertАвтор", connection);
+                adapter.InsertCommand.CommandType = CommandType.StoredProcedure;
+                adapter.InsertCommand.Parameters.Add(new SqlParameter("@Автор", SqlDbType.VarChar, 50, "Автор"));
+                SqlParameter parameter = adapter.InsertCommand.Parameters.Add("@Номер", SqlDbType.Int, 0, "Номер");
+                parameter.Direction = ParameterDirection.Output;
+                connection.Open();
+                adapter.Fill(libraryTable);
+                AuthorGrid.ItemsSource = libraryTable.DefaultView;
+                AuthorGridUser.ItemsSource = libraryTable.DefaultView;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                if (connection != null)
+                    connection.Close();
+            }
+            string sq3 = "SELECT * FROM Жанр";
+            libraryTable = new DataTable();
+            try
+            {
+                connection = new SqlConnection(connectionString);
+                SqlCommand command = new SqlCommand(sq3, connection);
+                adapter = new SqlDataAdapter(command);
+                adapter.InsertCommand = new SqlCommand("sp_InsertЖанр", connection);
+                adapter.InsertCommand.CommandType = CommandType.StoredProcedure;
+                adapter.InsertCommand.Parameters.Add(new SqlParameter("@Жанр", SqlDbType.VarChar, 50, "Жанр"));
+                SqlParameter parameter = adapter.InsertCommand.Parameters.Add("@Номер", SqlDbType.Int, 0, "Номер");
+                parameter.Direction = ParameterDirection.Output;
+                connection.Open();
+                adapter.Fill(libraryTable);
+                GenreGrid.ItemsSource = libraryTable.DefaultView;
+                GenreGridUser.ItemsSource = libraryTable.DefaultView;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                if (connection != null)
+                    connection.Close();
+            }
+            string sq4 = "SELECT * FROM Издатель";
+            libraryTable = new DataTable();
+            try
+            {
+                connection = new SqlConnection(connectionString);
+                SqlCommand command = new SqlCommand(sq4, connection);
+                adapter = new SqlDataAdapter(command);
+                adapter.InsertCommand = new SqlCommand("sp_InsertИздатель", connection);
+                adapter.InsertCommand.CommandType = CommandType.StoredProcedure;
+                adapter.InsertCommand.Parameters.Add(new SqlParameter("@Издатель", SqlDbType.VarChar, 50, "Жанр"));
+                SqlParameter parameter = adapter.InsertCommand.Parameters.Add("@Номер", SqlDbType.Int, 0, "Номер");
+                parameter.Direction = ParameterDirection.Output;
+                connection.Open();
+                adapter.Fill(libraryTable);
+                PublisherGrid.ItemsSource = libraryTable.DefaultView;
+                PublisherGridUser.ItemsSource = libraryTable.DefaultView;
             }
             catch (Exception ex)
             {
@@ -118,6 +195,17 @@ namespace WpfApp1
             UpdateDB();
         }
 
-        
+        private void Back_Click(object sender, RoutedEventArgs e)
+        {
+            DataBaseMenuAdmin.Visibility = Visibility.Hidden;
+            MainMenu.Visibility = Visibility.Visible;
+
+        }
+
+        private void BackUserMenu_Click(object sender, RoutedEventArgs e)
+        {
+            DataBaseMenuUser.Visibility = Visibility.Hidden;
+            MainMenu.Visibility = Visibility.Visible;
+        }
     }
 }
