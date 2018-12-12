@@ -34,17 +34,11 @@
 
         </Grid>
         <Grid Name="DataBaseMenuAdmin" Visibility="Hidden">
-            <Grid.RowDefinitions>
-                <RowDefinition />
-                <RowDefinition Height="Auto" MinHeight="35" />
-            </Grid.RowDefinitions>
-            <DataGrid AutoGenerateColumns="False" x:Name="libraryGrid" Height="322" VerticalAlignment="Top" Margin="0,62,0,0">
+
+            <DataGrid AutoGenerateColumns="False" x:Name="libraryGrid" Height="342" VerticalAlignment="Top" Margin="0,67,0,0" HorizontalAlignment="Left" Width="195">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Binding="{Binding Номер}" Header="Номер" Width="125"/>
-                    <DataGridTextColumn Binding="{Binding Книга}" Header="Книга" Width="125"/>
-                    <DataGridTextColumn Binding="{Binding Автор}" Header="Автор" Width="80"/>
-                    <DataGridTextColumn Binding="{Binding Жанр}" Header="Жанр" Width="80"/>
-                    <DataGridTextColumn Binding="{Binding Издатель}" Header="Издатель" Width="80"/>
+                    <DataGridTextColumn Binding="{Binding Номер}" Header="Номер" Width="48"/>
+                    <DataGridTextColumn Binding="{Binding Книга}" Header="Книга" Width="145"/>
                 </DataGrid.Columns>
             </DataGrid>
             <Button Name="UpdateButton" ToolTip="Обновить" HorizontalAlignment="Left" Margin="660,10,0,0" VerticalAlignment="Top" Width="45" Height="39" Click="Button_Click_1" Background="White" BorderBrush="White" Foreground="White" AutomationProperties.HelpText="Обновить">
@@ -53,23 +47,52 @@
             <Button Name="DeletionButton" ToolTip="Удаление" Margin="720,10,0,0" VerticalAlignment="Top" Height="39" Click="Button_Click_2" HorizontalAlignment="Left" Width="45" Background="White" BorderBrush="White" Foreground="White" AutomationProperties.HelpText="Удалить" >
                 <Image Height="36" Source="C:\Users\Buinov\source\repos\WpfApp1\WpfApp1\Icons\icons8-удалить-96.png" Stretch="Fill" Width="41" RenderTransformOrigin="0.024,0.361"/>
             </Button>
-            <Image Margin="10,0,717,327" Source="C:\Users\Buinov\source\repos\WpfApp1\WpfApp1\Icons\icons8-книги-96.png" Stretch="Fill"/>
-        </Grid>
-        <Grid Name="DataBaseMenuUser" Visibility="Hidden">
-            <Grid.RowDefinitions>
-                <RowDefinition />
-                <RowDefinition Height="Auto" MinHeight="35" />
-            </Grid.RowDefinitions>
-            <DataGrid AutoGenerateColumns="False" x:Name="libraryGridUser" Height="322" VerticalAlignment="Top" Margin="0,62,0,0">
+            <Image Margin="10,0,717,357" Source="C:\Users\Buinov\source\repos\WpfApp1\WpfApp1\Icons\icons8-книги-96.png" Stretch="Fill" RenderTransformOrigin="0.5,0.5"/>
+            <DataGrid HorizontalAlignment="Left" Height="342" Margin="200,67,0,0" VerticalAlignment="Top" Width="195">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Binding="{Binding Номер}" Header="Номер" Width="125" IsReadOnly="True"/>
-                    <DataGridTextColumn Binding="{Binding Книга}" Header="Книга" Width="125" IsReadOnly="True"/>
-                    <DataGridTextColumn Binding="{Binding Автор}" Header="Автор" Width="80" IsReadOnly="True"/>
-                    <DataGridTextColumn Binding="{Binding Жанр}" Header="Жанр" Width="80" IsReadOnly="True"/>
-                    <DataGridTextColumn Binding="{Binding Издатель}" Header="Издатель" Width="80" IsReadOnly="True"/>
+                    <DataGridTextColumn Binding="{Binding Номер}" Header="Номер" Width="48"/>
+                    <DataGridTextColumn Binding="{Binding Автор}" Header="Автор" Width="145"/>
                 </DataGrid.Columns>
             </DataGrid>
-            <Image Margin="10,0,717,327" Source="C:\Users\Buinov\source\repos\WpfApp1\WpfApp1\Icons\icons8-книги-96.png" Stretch="Fill"/>
+            <DataGrid HorizontalAlignment="Left" Height="342" Margin="400,67,0,0" VerticalAlignment="Top" Width="195">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Binding="{Binding Номер}" Header="Номер" Width="48"/>
+                    <DataGridTextColumn Binding="{Binding Жанр}" Header="Жанр" Width="145"/>
+                </DataGrid.Columns>
+            </DataGrid>
+            <DataGrid Height="342" Margin="600,67,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="192">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Binding="{Binding Номер}" Header="Номер" Width="48"/>
+                    <DataGridTextColumn Binding="{Binding Издатель}" Header="Издатель" Width="142"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+        <Grid Name="DataBaseMenuUser" HorizontalAlignment="Left" Width="792" Visibility="Hidden">
+            <DataGrid AutoGenerateColumns="False" x:Name="libraryGridUser" Height="347" VerticalAlignment="Top" Margin="0,62,0,0" HorizontalAlignment="Left" Width="195" Grid.RowSpan="2">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Binding="{Binding Номер}" Header="Номер" Width="48" IsReadOnly="True"/>
+                    <DataGridTextColumn Binding="{Binding Книга}" Header="Книга" Width="145" IsReadOnly="True"/>
+                </DataGrid.Columns>
+            </DataGrid>
+            <DataGrid HorizontalAlignment="Left" Height="347" Margin="200,62,0,0" VerticalAlignment="Top" Width="195">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Binding="{Binding Номер}" Header="Номер" Width="48"/>
+                    <DataGridTextColumn Binding="{Binding Автор}" Header="Автор" Width="145"/>
+                </DataGrid.Columns>
+            </DataGrid>
+            <DataGrid HorizontalAlignment="Left" Height="347" Margin="400,62,0,0" VerticalAlignment="Top" Width="195">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Binding="{Binding Номер}" Header="Номер" Width="48"/>
+                    <DataGridTextColumn Binding="{Binding Жанр}" Header="Жанр" Width="145"/>
+                </DataGrid.Columns>
+            </DataGrid>
+            <DataGrid Height="347" Margin="600,62,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="192">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Binding="{Binding Номер}" Header="Номер" Width="48"/>
+                    <DataGridTextColumn Binding="{Binding Издатель}" Header="Издатель" Width="142"/>
+                </DataGrid.Columns>
+            </DataGrid>
+            <Image Margin="10,0,717,362" Source="C:\Users\Buinov\source\repos\WpfApp1\WpfApp1\Icons\icons8-книги-96.png" Stretch="Fill"/>
         </Grid>
     </Grid>
 </Window>
