@@ -125,5 +125,14 @@
   <ItemGroup>
     <Resource Include="Icons\icons8-книги-96 %281%29.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\icons8-открытая-книга-96.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\icons8-добавить-96.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\icons8-редактировать-96.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

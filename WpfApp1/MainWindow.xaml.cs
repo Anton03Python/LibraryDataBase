@@ -29,7 +29,8 @@ namespace WpfApp1
         SqlDataAdapter adapter;
         DataTable libraryTable;
         
-
+        
+         
         public MainWindow()
         {
             InitializeComponent();
@@ -43,7 +44,7 @@ namespace WpfApp1
                 TextBox1.Clear();
                 PasswordBox1.Clear();
                 MainMenu.Visibility = Visibility.Hidden;
-                DataBaseMenuAdmin.Visibility = Visibility.Visible;
+                ReadOrCreatMenu.Visibility = Visibility.Visible;
             }
             else
             {
@@ -59,7 +60,7 @@ namespace WpfApp1
         {
             string sql = "SELECT * FROM MyLibrary";
             libraryTable = new DataTable();
-            SqlConnection connection = null;
+            SqlConnection connection = null;            
             try
             {
                 connection = new SqlConnection(connectionString);
@@ -103,6 +104,11 @@ namespace WpfApp1
                 adapter.Fill(libraryTable);
                 AuthorGrid.ItemsSource = libraryTable.DefaultView;
                 AuthorGridUser.ItemsSource = libraryTable.DefaultView;
+                SqlDataAdapter da = new SqlDataAdapter("Select Автор FROM Автор", connection);
+                DataSet ds = new DataSet();
+                da.Fill(ds, "Автор");
+                Author.ItemsSource = ds.Tables[0].DefaultView;
+                Author.DisplayMemberPath = ds.Tables[0].Columns["Автор"].ToString();
             }
             catch (Exception ex)
             {
@@ -129,6 +135,11 @@ namespace WpfApp1
                 adapter.Fill(libraryTable);
                 GenreGrid.ItemsSource = libraryTable.DefaultView;
                 GenreGridUser.ItemsSource = libraryTable.DefaultView;
+                SqlDataAdapter da = new SqlDataAdapter("Select Жанр FROM Жанр", connection);
+                DataSet ds = new DataSet();
+                da.Fill(ds, "Жанр");
+                Genre.ItemsSource = ds.Tables[0].DefaultView;
+                Genre.DisplayMemberPath = ds.Tables[0].Columns["Жанр"].ToString();
             }
             catch (Exception ex)
             {
@@ -148,13 +159,18 @@ namespace WpfApp1
                 adapter = new SqlDataAdapter(command);
                 adapter.InsertCommand = new SqlCommand("sp_InsertИздатель", connection);
                 adapter.InsertCommand.CommandType = CommandType.StoredProcedure;
-                adapter.InsertCommand.Parameters.Add(new SqlParameter("@Издатель", SqlDbType.VarChar, 50, "Жанр"));
+                adapter.InsertCommand.Parameters.Add(new SqlParameter("@Издатель", SqlDbType.VarChar, 50, "Издатель"));
                 SqlParameter parameter = adapter.InsertCommand.Parameters.Add("@Номер", SqlDbType.Int, 0, "Номер");
                 parameter.Direction = ParameterDirection.Output;
                 connection.Open();
                 adapter.Fill(libraryTable);
                 PublisherGrid.ItemsSource = libraryTable.DefaultView;
                 PublisherGridUser.ItemsSource = libraryTable.DefaultView;
+                SqlDataAdapter da = new SqlDataAdapter("Select Издатель FROM Издатель", connection);
+                DataSet ds = new DataSet();
+                da.Fill(ds, "Издатель");
+                Edition.ItemsSource = ds.Tables[0].DefaultView;
+                Edition.DisplayMemberPath = ds.Tables[0].Columns["Издатель"].ToString();
             }
             catch (Exception ex)
             {
@@ -180,26 +196,33 @@ namespace WpfApp1
 
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
-            if (libraryGrid.SelectedItems != null)
+            MessageBoxResult result = MessageBox.Show("Вы действительно хотите совершить удаление?" + "\n" + "Выделенные вами данные будут удалены безвозвратно!", "Подтверждение удаления данных", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            if (result == MessageBoxResult.Yes)
             {
-                for (int i = 0; i < libraryGrid.SelectedItems.Count; i++)
+                if (libraryGrid.SelectedItems != null)
                 {
-                    DataRowView datarowView = libraryGrid.SelectedItems[i] as DataRowView;
-                    if (datarowView != null)
+                    for (int i = 0; i < libraryGrid.SelectedItems.Count; i++)
                     {
-                        DataRow dataRow = (DataRow)datarowView.Row;
-                        dataRow.Delete();
+                        DataRowView datarowView = libraryGrid.SelectedItems[i] as DataRowView;
+                        if (datarowView != null)
+                        {
+                            DataRow dataRow = (DataRow)datarowView.Row;
+                            dataRow.Delete();
+                        }
                     }
                 }
+                UpdateDB();
             }
-            UpdateDB();
+            else
+            {
+
+            }
         }
 
         private void Back_Click(object sender, RoutedEventArgs e)
         {
-            DataBaseMenuAdmin.Visibility = Visibility.Hidden;
-            MainMenu.Visibility = Visibility.Visible;
-
+            DataBaseReadMenuAdmin.Visibility = Visibility.Hidden;
+            ReadOrCreatMenu.Visibility = Visibility.Visible;
         }
 
         private void BackUserMenu_Click(object sender, RoutedEventArgs e)
@@ -207,5 +230,25 @@ namespace WpfApp1
             DataBaseMenuUser.Visibility = Visibility.Hidden;
             MainMenu.Visibility = Visibility.Visible;
         }
+
+        private void ReadButton_Click(object sender, RoutedEventArgs e)
+        {
+            ReadOrCreatMenu.Visibility = Visibility.Hidden;
+            DataBaseReadMenuAdmin.Visibility = Visibility.Visible;
+        }
+
+        private void BackReadOrCreatMenu_Click(object sender, RoutedEventArgs e)
+        {
+            ReadOrCreatMenu.Visibility = Visibility.Hidden;
+            MainMenu.Visibility = Visibility.Visible;
+        }
+
+        private void EditorButton_Click(object sender, RoutedEventArgs e)
+        {
+            DataBaseReadMenuAdmin.Visibility = Visibility.Hidden;
+            this.Width = 300;
+            this.Height = 400;
+            UpdateMenu.Visibility = Visibility.Visible;
+        }      
     }
 }
