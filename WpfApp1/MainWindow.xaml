@@ -5,9 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfApp1"
         mc:Ignorable="d"
-        Title="Library database" MaxHeight="450" MaxWidth="800" Height="450" Width="800" Icon="C:\Users\Buinov\source\repos\WpfApp1\WpfApp1\Icons\icons8-библиотека-96 (1).png" Loaded="Window_Loaded">
+        Title="Library database" MinHeight="450" MinWidth="800" MaxHeight="450" MaxWidth="800" Height="450" Width="800" Icon="C:\Users\Buinov\source\repos\WpfApp1\WpfApp1\Icons\icons8-библиотека-96 (1).png" Loaded="Window_Loaded">
     <Grid >
-        <Grid Name="MainMenu" Visibility="Hidden" >
+        <Grid.RowDefinitions>
+            <RowDefinition Height="49*"/>
+            <RowDefinition Height="370*"/>
+        </Grid.RowDefinitions>
+        <Grid Name="MainMenu" Grid.RowSpan="2" >
             <Grid.RowDefinitions>
                 <RowDefinition Height="60*"/>
                 <RowDefinition Height="243*"/>
@@ -25,7 +29,7 @@
                     <TextBox Name="TextBox1" HorizontalAlignment="Left" Height="29" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="131" Margin="144,0,0,0" RenderTransformOrigin="0.483,1.622" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
                     <Label Content="Пароль:" Margin="144,10,144,0" VerticalAlignment="Top" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="18" RenderTransformOrigin="-0.786,0.573" Height="35" Foreground="#FFE1127F"/>
                     <PasswordBox Name="PasswordBox1" HorizontalAlignment="Left" Margin="144,0,0,0" VerticalAlignment="Top" Width="131" Height="33" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
-                    <Button Content="Вход" Grid.Column="1" HorizontalAlignment="Left" Margin="144,17,0,0" Grid.Row="2" VerticalAlignment="Top" Width="131" Height="34" FontSize="18" Click="Button_Click" Background="#FF3498DB" Foreground="#FFE1127F"/>
+                    <Button Name="SignInMenu" Content="Вход" Grid.Column="1" HorizontalAlignment="Left" Margin="144,17,0,0" Grid.Row="2" VerticalAlignment="Top" Width="131" Height="34" FontSize="18" Background="#FF3498DB" Foreground="#FFE1127F" Click="SignInMenu_Click"/>
                 </StackPanel>
             </Border>
             <Label Content="Library DataBase" Grid.Column="1" HorizontalAlignment="Left" Margin="10,29,0,0" VerticalAlignment="Top" Width="420" FontSize="20" Height="40" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="#FFE1127F"/>
@@ -33,7 +37,7 @@
             <TextBlock HorizontalAlignment="Left" Margin="0,47,0,0" Grid.Row="2" TextWrapping="Wrap" Text="This program belongs to the library №6. All rights reserved. Developed by Python_dev" VerticalAlignment="Top" Height="22" Width="792" Grid.ColumnSpan="3" Foreground="#FFE1127F" FontSize="14"/>
 
         </Grid>
-        <Grid Name="ReadOrCreatMenu" Visibility="Hidden">
+        <Grid Name="ReadOrCreatMenu" Grid.RowSpan="2" Visibility="Hidden">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
@@ -51,19 +55,19 @@
                 <Image Height="96" Source="C:\Users\Buinov\Source\Repos\LibraryDataBase\WpfApp1\Icons\icons8-добавить-96.png" Stretch="Fill" Width="133"/>
             </Button>
         </Grid>
-        <Grid Name="DataBaseReadMenuAdmin" Visibility="Hidden">
+        <Grid Name="DataBaseReadMenuAdmin" Grid.RowSpan="2" Visibility="Hidden">
             <Grid.RowDefinitions>
                 <RowDefinition Height="52*"/>
                 <RowDefinition Height="367*"/>
             </Grid.RowDefinitions>
 
-            <DataGrid AutoGenerateColumns="False" x:Name="libraryGrid" Height="347" VerticalAlignment="Top" Margin="0,10,0,0" HorizontalAlignment="Left" Width="195" Grid.Row="1">
+            <DataGrid AutoGenerateColumns="False" x:Name="BookGrid" Height="324" VerticalAlignment="Top" Margin="0,10,0,0" HorizontalAlignment="Left" Width="195" Grid.Row="1">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Binding="{Binding IdBook}" Header="Номер" Width="48"/>
-                    <DataGridTextColumn Binding="{Binding Book}" Header="Книга" Width="145"/>
+                    <DataGridTextColumn Binding="{Binding IdBook}" Header="Номер" Width="48" IsReadOnly="True"/>
+                    <DataGridTextColumn Binding="{Binding Book}" Header="Книга" Width="145" IsReadOnly="True"/>
                 </DataGrid.Columns>
             </DataGrid>
-            <Button Name="DeletionButton" ToolTip="Удаление" Margin="670,0,0,0" VerticalAlignment="Top" Height="42" Click="Button_Click_2" HorizontalAlignment="Left" Width="45" Background="White" BorderBrush="White" Foreground="White" AutomationProperties.HelpText="Удалить" >
+            <Button Name="DeletionButton" ToolTip="Удаление" Margin="670,0,0,10" VerticalAlignment="Bottom" Height="42" Click="Button_Click_2" HorizontalAlignment="Left" Width="45" Background="White" BorderBrush="White" Foreground="White" AutomationProperties.HelpText="Удалить" >
                 <Image Height="36" Source="C:\Users\Buinov\source\repos\WpfApp1\WpfApp1\Icons\icons8-удалить-96.png" Stretch="Fill" Width="41" RenderTransformOrigin="0.024,0.361"/>
             </Button>
             <Button Name="Back" ToolTip="Назад" HorizontalAlignment="Left" Margin="720,0,0,0" VerticalAlignment="Top" Width="45" Height="42" Background="White" BorderBrush="White" Click="Back_Click">
@@ -74,45 +78,47 @@
             </Button>
             <Button Content="Button" HorizontalAlignment="Left" Margin="570,0,0,0" VerticalAlignment="Top" Width="45" Height="42" Click="Button_Click_3"/>
             <Image Margin="10,0,726,6" Source="C:\Users\Buinov\Source\Repos\LibraryDataBase\WpfApp1\Icons\icons8-книги-96 (1).png" Stretch="Fill"/>
-            <DataGrid AutoGenerateColumns="False" HorizontalAlignment="Left" Height="347" Margin="200,10,0,0" VerticalAlignment="Top" Width="195" x:Name="AuthorGrid" Grid.Row="1">
-                <DataGrid.Columns>
-                    <DataGridTextColumn Binding="{Binding IdAuthor}" Header="Номер" Width="48"/>
-                    <DataGridTextColumn Binding="{Binding Author}" Header="Автор" Width="145"/>
-                </DataGrid.Columns>
-            </DataGrid>
-            <DataGrid AutoGenerateColumns="False" x:Name="GenreGrid" HorizontalAlignment="Left" Height="347" Margin="400,10,0,0" VerticalAlignment="Top" Width="195" Grid.Row="1">
-                <DataGrid.Columns>
-                    <DataGridTextColumn Binding="{Binding IdGenre}" Header="Номер" Width="48"/>
-                    <DataGridTextColumn Binding="{Binding Genre}" Header="Жанр" Width="145"/>
-                </DataGrid.Columns>
-            </DataGrid>
-            <DataGrid AutoGenerateColumns="False" x:Name="PublisherGrid" Height="347" Margin="600,10,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="192" Grid.Row="1">
-                <DataGrid.Columns>
-                    <DataGridTextColumn Binding="{Binding IdPublisher}" Header="Номер" Width="48"/>
-                    <DataGridTextColumn Binding="{Binding Publisher}" Header="Издатель" Width="142"/>
-                </DataGrid.Columns>
-            </DataGrid>
-        </Grid>
-        <Grid Name="DataBaseMenuUser" HorizontalAlignment="Left" Width="792" Visibility="Hidden">
-            <DataGrid AutoGenerateColumns="False" x:Name="libraryGridUser" Height="347" VerticalAlignment="Top" Margin="0,62,0,0" HorizontalAlignment="Left" Width="195" Grid.RowSpan="2">
-                <DataGrid.Columns>
-                    <DataGridTextColumn Binding="{Binding IdBook}" Header="Номер" Width="48" IsReadOnly="True"/>
-                    <DataGridTextColumn Binding="{Binding Book}" Header="Книга" Width="145" IsReadOnly="True"/>
-                </DataGrid.Columns>
-            </DataGrid>
-            <DataGrid AutoGenerateColumns="False" HorizontalAlignment="Left" Height="347" Margin="200,62,0,0" VerticalAlignment="Top" Width="195" x:Name="AuthorGridUser">
+            <DataGrid AutoGenerateColumns="False" HorizontalAlignment="Left" Height="324" Margin="200,10,0,0" VerticalAlignment="Top" Width="195" x:Name="AuthorGrid" Grid.Row="1">
                 <DataGrid.Columns>
                     <DataGridTextColumn Binding="{Binding IdAuthor}" Header="Номер" Width="48" IsReadOnly="True"/>
                     <DataGridTextColumn Binding="{Binding Author}" Header="Автор" Width="145" IsReadOnly="True"/>
                 </DataGrid.Columns>
             </DataGrid>
-            <DataGrid AutoGenerateColumns="False" x:Name="GenreGridUser"  HorizontalAlignment="Left" Height="347" Margin="400,62,0,0" VerticalAlignment="Top" Width="195">
+            <DataGrid AutoGenerateColumns="False" x:Name="GenreGrid" HorizontalAlignment="Left" Height="324" Margin="400,10,0,0" VerticalAlignment="Top" Width="195" Grid.Row="1">
                 <DataGrid.Columns>
                     <DataGridTextColumn Binding="{Binding IdGenre}" Header="Номер" Width="48" IsReadOnly="True"/>
                     <DataGridTextColumn Binding="{Binding Genre}" Header="Жанр" Width="145" IsReadOnly="True"/>
                 </DataGrid.Columns>
             </DataGrid>
-            <DataGrid AutoGenerateColumns="False" x:Name="PublisherGridUser" Height="347" Margin="600,62,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="192">
+            <DataGrid AutoGenerateColumns="False" x:Name="PublisherGrid" Height="324" Margin="600,10,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="192" Grid.Row="1">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Binding="{Binding IdPublisher}" Header="Номер" Width="48" IsReadOnly="True"/>
+                    <DataGridTextColumn Binding="{Binding Publisher}" Header="Издатель" Width="142" IsReadOnly="True"/>
+                </DataGrid.Columns>
+            </DataGrid>
+            <TextBlock HorizontalAlignment="Left" Margin="0,339,0,0" Grid.Row="1" TextWrapping="Wrap" Text="This program belongs to the library №6. All rights reserved. Developed by Python_dev" VerticalAlignment="Top" Height="22" Width="792" Foreground="#FFE1127F" FontSize="14"/>
+
+        </Grid>
+        <Grid Name="DataBaseMenuUser" HorizontalAlignment="Left" Width="792" Grid.RowSpan="2" Visibility="Hidden">
+            <DataGrid AutoGenerateColumns="False" x:Name="BookGridUser" Height="324" VerticalAlignment="Top" Margin="0,62,0,0" HorizontalAlignment="Left" Width="195">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Binding="{Binding IdBook}" Header="Номер" Width="48" IsReadOnly="True"/>
+                    <DataGridTextColumn Binding="{Binding Book}" Header="Книга" Width="145" IsReadOnly="True"/>
+                </DataGrid.Columns>
+            </DataGrid>
+            <DataGrid AutoGenerateColumns="False" HorizontalAlignment="Left" Height="324" Margin="200,62,0,0" VerticalAlignment="Top" Width="195" x:Name="AuthorGridUser">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Binding="{Binding IdAuthor}" Header="Номер" Width="48" IsReadOnly="True"/>
+                    <DataGridTextColumn Binding="{Binding Author}" Header="Автор" Width="145" IsReadOnly="True"/>
+                </DataGrid.Columns>
+            </DataGrid>
+            <DataGrid AutoGenerateColumns="False" x:Name="GenreGridUser"  HorizontalAlignment="Left" Height="324" Margin="400,62,0,0" VerticalAlignment="Top" Width="195">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Binding="{Binding IdGenre}" Header="Номер" Width="48" IsReadOnly="True"/>
+                    <DataGridTextColumn Binding="{Binding Genre}" Header="Жанр" Width="145" IsReadOnly="True"/>
+                </DataGrid.Columns>
+            </DataGrid>
+            <DataGrid AutoGenerateColumns="False" x:Name="PublisherGridUser" Height="324" Margin="600,62,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="192">
                 <DataGrid.Columns>
                     <DataGridTextColumn Binding="{Binding IdPublisher}" Header="Номер" Width="48" IsReadOnly="True"/>
                     <DataGridTextColumn Binding="{Binding Publisher}" Header="Издатель" Width="142" IsReadOnly="True"/>
@@ -123,42 +129,38 @@
             </Button>
             <Image Margin="80,0,653,362" Source="C:\Users\Buinov\Source\Repos\LibraryDataBase\WpfApp1\Icons\icons8-пользователь-96.png" Stretch="Fill"/>
             <Image Margin="10,0,717,362" Source="C:\Users\Buinov\Source\Repos\LibraryDataBase\WpfApp1\Icons\icons8-книги-96 (1).png" Stretch="Fill"/>
+            <TextBlock HorizontalAlignment="Left" Margin="0,391,0,0" TextWrapping="Wrap" Text="This program belongs to the library №6. All rights reserved. Developed by Python_dev" VerticalAlignment="Top" Height="22" Width="792" Foreground="#FFE1127F" FontSize="14"/>
         </Grid>
-        <Grid Name="UpdateMenu" Visibility="Hidden">
+        <Grid Name="UpdateMenu" Grid.RowSpan="2" Visibility="Hidden">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="8*"/>
+                <ColumnDefinition Width="326*"/>
+                <ColumnDefinition Width="13*"/>
+                <ColumnDefinition Width="445*"/>
+            </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="50*"/>
-                <RowDefinition Height="369*"/>
+                <RowDefinition Height="59*"/>
+                <RowDefinition Height="10*"/>
+                <RowDefinition Height="320*"/>
+                <RowDefinition Height="30*"/>
             </Grid.RowDefinitions>
-            <Button Content="Button" HorizontalAlignment="Left" VerticalAlignment="Top" Width="45" Height="39" Margin="737,1,0,0"/>
-            <Image Source="C:\Users\Buinov\Source\Repos\LibraryDataBase\WpfApp1\Icons\icons8-редактировать-96.png" Stretch="Fill" Margin="10,1,737,10" RenderTransformOrigin="0.561,0.222"/>
-            <TabControl HorizontalAlignment="Left" Height="349" Margin="10,10,0,0" VerticalAlignment="Top" Width="350" Grid.Row="1">
-                <TabItem Header="Книга">
-                    <Grid Background="#FFE5E5E5">
-                        <ComboBox  HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="120" Grid.ColumnSpan="2" />
-                        <DataGrid HorizontalAlignment="Left" Height="307" Margin="139,10,0,0" VerticalAlignment="Top" Width="195"/>
-                    </Grid>
-                </TabItem>
-                <TabItem Header="Автор">
-                    <Grid Background="#FFE5E5E5">
-                        <ComboBox Name="Author" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="120" Grid.ColumnSpan="2" ItemsSource="{Binding}"/>
-                        <DataGrid HorizontalAlignment="Left" Height="307" Margin="139,10,0,0" VerticalAlignment="Top" Width="195"/>
-                    </Grid>
-                </TabItem>
-                <TabItem Header="Жанр">
-                    <Grid Background="#FFE5E5E5">
-                        <ComboBox Name="Genre" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="120" Grid.ColumnSpan="2" ItemsSource="{Binding}"/>
-                        <DataGrid HorizontalAlignment="Left" Height="307" Margin="139,10,0,0" VerticalAlignment="Top" Width="195"/>
-                    </Grid>
-                </TabItem>
-                <TabItem Header="Издание">
-                    <Grid Background="#FFE5E5E5">
-                        <ComboBox Name="Edition" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="120" Grid.ColumnSpan="2" ItemsSource="{Binding}"/>
-                        <DataGrid HorizontalAlignment="Left" Height="307" Margin="139,10,0,0" VerticalAlignment="Top" Width="195"/>
-                    </Grid>
-                </TabItem>
-            </TabControl>
+            <Button Name="BackUpdateMenu" Content="Button" HorizontalAlignment="Left" VerticalAlignment="Top" Width="45" Height="39" Margin="390,10,0,0" Grid.Column="3" Click="BackUpdateMenu_Click"/>
+            <Image Source="C:\Users\Buinov\Source\Repos\LibraryDataBase\WpfApp1\Icons\icons8-редактировать-96.png" Stretch="Fill" Margin="2,10,275,10" RenderTransformOrigin="0.561,0.222" Grid.Column="1"/>
+            <Rectangle Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="310" Grid.Row="2" Stroke="Black" VerticalAlignment="Top" Width="327" Grid.Column="1" Grid.ColumnSpan="2"/>
+            <Label Content="Название книги:" HorizontalAlignment="Left" Margin="10,10,0,0" Grid.Row="2" VerticalAlignment="Top" Height="26" Width="100" Grid.Column="1"/>
+            <Label Content="Автор книги:" Grid.Column="1" HorizontalAlignment="Left" Margin="10,69,0,0" Grid.Row="2" VerticalAlignment="Top" Height="26" Width="80"/>
+            <ComboBox Name="AuthorComboBox" Grid.Column="1" HorizontalAlignment="Left" Margin="10,100,0,0" Grid.Row="2" VerticalAlignment="Top" Width="120" Height="22" ItemsSource="{Binding}"/>
+            <TextBox Name="NameBookTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="10,41,0,0" Grid.Row="2" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+            <Label Content="Жанр книги:" Grid.Column="1" HorizontalAlignment="Left" Margin="10,127,0,0" Grid.Row="2" VerticalAlignment="Top" Height="26" Width="80"/>
+            <ComboBox Name="GenreComboBox" Grid.Column="1" HorizontalAlignment="Left" Margin="10,158,0,0" Grid.Row="2" VerticalAlignment="Top" Width="120" Height="22" ItemsSource="{Binding}"/>
+            <Label Content="Издатель книги:" Grid.Column="1" HorizontalAlignment="Left" Margin="10,185,0,0" Grid.Row="2" VerticalAlignment="Top" Height="26" Width="100"/>
+            <ComboBox Name="PublisherComboBox" Grid.Column="1" HorizontalAlignment="Left" Margin="10,216,0,0" Grid.Row="2" VerticalAlignment="Top" Width="120" Height="22" ItemsSource="{Binding}"/>
+            <Button Content="Button" Grid.Column="1" HorizontalAlignment="Left" Margin="10,255,0,0" Grid.Row="2" Width="45" Height="39" VerticalAlignment="Top" Click="Button_Click"/>
+            <Button Content="Button" Grid.Column="1" HorizontalAlignment="Left" Margin="235,255,0,0" Grid.Row="2" VerticalAlignment="Top" Width="81" Height="39"/>
+            <TextBlock HorizontalAlignment="Left" Margin="0,8,0,0" Grid.Row="3" TextWrapping="Wrap" Text="This program belongs to the library №6. All rights reserved. Developed by Python_dev" VerticalAlignment="Top" Height="22" Width="792" Grid.ColumnSpan="4" Foreground="#FFE1127F" FontSize="14"/>
+
         </Grid>
-        <Grid Name="CreateMenu">
+        <Grid Name="CreateMenu" Grid.RowSpan="2" Visibility="Hidden">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="10*"/>
                 <ColumnDefinition Width="377*"/>
@@ -169,12 +171,12 @@
                 <RowDefinition Height="50*"/>
                 <RowDefinition Height="10*"/>
                 <RowDefinition Height="298*"/>
-                <RowDefinition Height="11*"/>
+
                 <RowDefinition Height="50*"/>
             </Grid.RowDefinitions>
 
             <Rectangle Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="299" Grid.Row="2" Stroke="Black" VerticalAlignment="Top" Width="367" Grid.Column="1" Grid.RowSpan="2"/>
-            <DataGrid AutoGenerateColumns="False" Name="CreateMenuGrid" Grid.Column="3" HorizontalAlignment="Left" Height="299" Margin="10,0,0,0" Grid.Row="2" VerticalAlignment="Top" Width="102" Grid.RowSpan="2">
+            <DataGrid AutoGenerateColumns="False" Name="CreateMenuGrid" Grid.Column="3" HorizontalAlignment="Left" Height="299" Margin="10,0,0,0" Grid.Row="2" VerticalAlignment="Top" Width="102">
                 <DataGrid.Columns>
                     <DataGridTextColumn Binding="{Binding Book}" Header="Книга" Width="100"/>
                 </DataGrid.Columns>
@@ -189,10 +191,22 @@
             <Label Content="Издатель книги:" Grid.Column="1" HorizontalAlignment="Left" Margin="10,187,0,0" Grid.Row="2" VerticalAlignment="Top"/>
             <TextBox Name="PublisherTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="10,218,0,0" Grid.Row="2" TextWrapping="Wrap" VerticalAlignment="Top" Width="200"/>
             <Button Content="Button" Grid.Column="1" HorizontalAlignment="Left" Margin="10,246,0,0" Grid.Row="2" VerticalAlignment="Top" Width="98" Height="42" Click="Button_Click_4"/>
-            <DataGrid Grid.Column="3" HorizontalAlignment="Left" Height="298" Margin="117,1,0,0" Grid.Row="2" VerticalAlignment="Top" Width="88" Grid.RowSpan="2"/>
-            <DataGrid Grid.Column="3" HorizontalAlignment="Left" Height="298" Margin="210,0,0,0" Grid.Row="2" VerticalAlignment="Top" Width="86"/>
-            <DataGrid Grid.Column="3" HorizontalAlignment="Left" Height="298" Margin="301,0,0,0" Grid.Row="2" VerticalAlignment="Top" Width="85"/>
-
+            <DataGrid Grid.Column="3" HorizontalAlignment="Left" Height="298" Margin="117,1,0,0" Grid.Row="2" VerticalAlignment="Top" Width="88">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Binding="{Binding Author}" Header="Автор" Width="100"/>
+                </DataGrid.Columns>
+            </DataGrid>
+            <DataGrid Grid.Column="3" HorizontalAlignment="Left" Height="299" Margin="210,0,0,0" Grid.Row="2" VerticalAlignment="Top" Width="86">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Binding="{Binding Genre}" Header="Жанр" Width="100"/>
+                </DataGrid.Columns>
+            </DataGrid>
+            <DataGrid Grid.Column="3" HorizontalAlignment="Left" Height="299" Margin="301,0,0,0" Grid.Row="2" VerticalAlignment="Top" Width="85">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Binding="{Binding Publisher}" Header="Издатель" Width="100"/>
+                </DataGrid.Columns>
+            </DataGrid>
+            <TextBlock HorizontalAlignment="Left" Margin="0,30,0,0" TextWrapping="Wrap" Text="This program belongs to the library №6. All rights reserved. Developed by Python_dev" VerticalAlignment="Top" Height="22" Width="792" Foreground="#FFE1127F" FontSize="14" Grid.ColumnSpan="4" Grid.Row="3"/>
 
         </Grid>
     </Grid>

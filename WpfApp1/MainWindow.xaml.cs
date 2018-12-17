@@ -29,22 +29,57 @@ namespace WpfApp1
         SqlDataAdapter adapter;
         DataTable libraryTable;
         SqlConnection connection = null;
-
-        public void ConnectionOpenAndAdapter()
-        {
-            connection.Open();
-            adapter.Fill(libraryTable);
-        }
+        string NameDataBase;
+        DataSet ds;
+        private DataTable dsAutors;
 
         public MainWindow()
         {
             InitializeComponent();
             connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+            connection = new SqlConnection(connectionString);
+            connection.Open();
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            string sql = "SELECT * FROM Book";
+            SqlDataAdapter da;
+          
+            NameDataBase = "Book";            
+            ConnectionDataBase(NameDataBase);
+            BookGrid.ItemsSource = libraryTable.DefaultView;
+            BookGridUser.ItemsSource = libraryTable.DefaultView;
+            
+
+            NameDataBase = "Author";           
+            ConnectionDataBase(NameDataBase);
+            AuthorGrid.ItemsSource = libraryTable.DefaultView;
+            AuthorGridUser.ItemsSource = libraryTable.DefaultView;
+            ConnectionDataComboBox(out da, out ds, NameDataBase);
+             dsAutors = ds.Tables[0];
+            AuthorComboBox.ItemsSource = ds.Tables[0].DefaultView;
+            AuthorComboBox.DisplayMemberPath = ds.Tables[0].Columns[NameDataBase].ToString();
+
+            NameDataBase = "Genre";
+            ConnectionDataBase(NameDataBase);
+            GenreGrid.ItemsSource = libraryTable.DefaultView;
+            GenreGridUser.ItemsSource = libraryTable.DefaultView;
+            ConnectionDataComboBox(out da, out ds, NameDataBase);
+            GenreComboBox.ItemsSource = ds.Tables[0].DefaultView;
+            GenreComboBox.DisplayMemberPath = ds.Tables[0].Columns[NameDataBase].ToString();
+
+            NameDataBase = "Publisher";
+            ConnectionDataBase(NameDataBase);
+            PublisherGrid.ItemsSource = libraryTable.DefaultView;
+            PublisherGridUser.ItemsSource = libraryTable.DefaultView;
+            ConnectionDataComboBox(out da, out ds, NameDataBase);
+            PublisherComboBox.ItemsSource = ds.Tables[0].DefaultView;
+            PublisherComboBox.DisplayMemberPath = ds.Tables[0].Columns[NameDataBase].ToString();
+        }
+
+        private void ConnectionDataBase(string NameDataBase)
+        {
+            string sql = "SELECT * FROM " + NameDataBase;
             libraryTable = new DataTable();
             try
             {
@@ -52,106 +87,13 @@ namespace WpfApp1
                 SqlCommand command = new SqlCommand(sql, connection);
                 adapter = new SqlDataAdapter(command);
                 // установка команды на добавление для вызова хранимой процедуры 
-                adapter.InsertCommand = new SqlCommand("sp_InsertBook", connection);
+                adapter.InsertCommand = new SqlCommand("sp_Insert"+NameDataBase, connection);
                 adapter.InsertCommand.CommandType = CommandType.StoredProcedure;
-                adapter.InsertCommand.Parameters.Add(new SqlParameter("@Book", SqlDbType.VarChar, 50, "Book"));
-                SqlParameter parameter = adapter.InsertCommand.Parameters.Add("@IdBook", SqlDbType.Int, 0, "IdBook");
+                adapter.InsertCommand.Parameters.Add(new SqlParameter("@"+NameDataBase, SqlDbType.VarChar, 50, NameDataBase));
+                SqlParameter parameter = adapter.InsertCommand.Parameters.Add("@Id"+NameDataBase, SqlDbType.Int, 0, "Id"+NameDataBase);
                 parameter.Direction = ParameterDirection.Output;
-                ConnectionOpenAndAdapter();
-                libraryGrid.ItemsSource = libraryTable.DefaultView;
-                libraryGridUser.ItemsSource = libraryTable.DefaultView;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-            finally
-            {
-                if (connection != null)
-                    connection.Close();
-            }
-            string sq2 = "SELECT * FROM Author";
-            libraryTable = new DataTable();
-            try
-            {
-                connection = new SqlConnection(connectionString);
-                SqlCommand command = new SqlCommand(sq2, connection);
-                adapter = new SqlDataAdapter(command);
-                adapter.InsertCommand = new SqlCommand("sp_InsertAuthor", connection);
-                adapter.InsertCommand.CommandType = CommandType.StoredProcedure;
-                adapter.InsertCommand.Parameters.Add(new SqlParameter("@Author", SqlDbType.VarChar, 50, "Auhtor"));
-                SqlParameter parameter = adapter.InsertCommand.Parameters.Add("@IdAuthor", SqlDbType.Int, 0, "IdAuthor");
-                parameter.Direction = ParameterDirection.Output;
-                ConnectionOpenAndAdapter();
-                AuthorGrid.ItemsSource = libraryTable.DefaultView;
-                AuthorGridUser.ItemsSource = libraryTable.DefaultView;
-                SqlDataAdapter da = new SqlDataAdapter("Select Author FROM Author", connection);
-                DataSet ds = new DataSet();
-                da.Fill(ds, "Author");
-                Author.ItemsSource = ds.Tables[0].DefaultView;
-                Author.DisplayMemberPath = ds.Tables[0].Columns["Author"].ToString();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-            finally
-            {
-                if (connection != null)
-                    connection.Close();
-            }
-            string sq3 = "SELECT * FROM Genre";
-            libraryTable = new DataTable();
-            try
-            {
-                connection = new SqlConnection(connectionString);
-                SqlCommand command = new SqlCommand(sq3, connection);
-                adapter = new SqlDataAdapter(command);
-                adapter.InsertCommand = new SqlCommand("sp_InsertGenre", connection);
-                adapter.InsertCommand.CommandType = CommandType.StoredProcedure;
-                adapter.InsertCommand.Parameters.Add(new SqlParameter("@Genre", SqlDbType.VarChar, 50, "Genre"));
-                SqlParameter parameter = adapter.InsertCommand.Parameters.Add("@IdGenre", SqlDbType.Int, 0, "IdGenre");
-                parameter.Direction = ParameterDirection.Output;
-                ConnectionOpenAndAdapter();
-                GenreGrid.ItemsSource = libraryTable.DefaultView;
-                GenreGridUser.ItemsSource = libraryTable.DefaultView;
-
-                SqlDataAdapter da = new SqlDataAdapter("Select Genre FROM Genre", connection);
-                DataSet ds = new DataSet();
-                da.Fill(ds, "Genre");
-                Genre.ItemsSource = ds.Tables[0].DefaultView;
-                Genre.DisplayMemberPath = ds.Tables[0].Columns["Genre"].ToString();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-            finally
-            {
-                if (connection != null)
-                    connection.Close();
-            }
-            string sq4 = "SELECT * FROM Publisher";
-            libraryTable = new DataTable();
-            try
-            {
-                connection = new SqlConnection(connectionString);
-                SqlCommand command = new SqlCommand(sq4, connection);
-                adapter = new SqlDataAdapter(command);
-                adapter.InsertCommand = new SqlCommand("sp_InsertPublisher", connection);
-                adapter.InsertCommand.CommandType = CommandType.StoredProcedure;
-                adapter.InsertCommand.Parameters.Add(new SqlParameter("@Publisher", SqlDbType.VarChar, 50, "Publisher"));
-                SqlParameter parameter = adapter.InsertCommand.Parameters.Add("@IdPublisher", SqlDbType.Int, 0, "IdPublisher");
-                parameter.Direction = ParameterDirection.Output;
-                ConnectionOpenAndAdapter();
-                PublisherGrid.ItemsSource = libraryTable.DefaultView;
-                PublisherGridUser.ItemsSource = libraryTable.DefaultView;
-
-                SqlDataAdapter da = new SqlDataAdapter("Select Publisher FROM Publisher", connection);
-                DataSet ds = new DataSet();
-                da.Fill(ds, "Publisher");
-                Edition.ItemsSource = ds.Tables[0].DefaultView;
-                Edition.DisplayMemberPath = ds.Tables[0].Columns["Publisher"].ToString();
+                connection.Open();
+                adapter.Fill(libraryTable);
             }
             catch (Exception ex)
             {
@@ -163,6 +105,7 @@ namespace WpfApp1
                     connection.Close();
             }
         }
+
         private void Button_Click_4(object sender, RoutedEventArgs e)
         {
             connection = new SqlConnection(connectionString);
@@ -179,7 +122,8 @@ namespace WpfApp1
             connection.Close();
             UpdateDB();
         }
-        private void Button_Click(object sender, RoutedEventArgs e)
+
+        private void SignInMenu_Click(object sender, RoutedEventArgs e)
         {
             if (TextBox1.Text == "admin" && PasswordBox1.Password == "admin")
             {
@@ -198,10 +142,18 @@ namespace WpfApp1
             }
         }
 
-        private void UpdateDB()
+        private void BackReadOrCreatMenu_Click(object sender, RoutedEventArgs e)
         {
-            SqlCommandBuilder comandbuilder = new SqlCommandBuilder(adapter);
-            adapter.Update(libraryTable);
+            ReadOrCreatMenu.Visibility = Visibility.Hidden;
+            MainMenu.Visibility = Visibility.Visible;
+        }
+
+        private void ReadButton_Click(object sender, RoutedEventArgs e)
+        {
+            ReadOrCreatMenu.Visibility = Visibility.Hidden;
+            DataBaseReadMenuAdmin.Visibility = Visibility.Visible;
+
+
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
@@ -211,26 +163,34 @@ namespace WpfApp1
 
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
-            MessageBoxResult result = MessageBox.Show("Вы действительно хотите совершить удаление?" + "\n" + "Выделенные вами данные будут удалены безвозвратно!", "Подтверждение удаления данных", MessageBoxButton.YesNo, MessageBoxImage.Question);
-            if (result == MessageBoxResult.Yes)
+            MessageBoxResult result;
+            if (BookGrid.SelectedItem == null && AuthorGrid.SelectedItem == null && GenreGrid.SelectedItem == null && PublisherGrid.SelectedItem == null)
             {
-                if (libraryGrid.SelectedItems != null)
-                {
-                    for (int i = 0; i < libraryGrid.SelectedItems.Count; i++)
-                    {
-                        DataRowView datarowView = libraryGrid.SelectedItems[i] as DataRowView;
-                        if (datarowView != null)
-                        {
-                            DataRow dataRow = (DataRow)datarowView.Row;
-                            dataRow.Delete();
-                        }
-                    }
-                }
-                UpdateDB();
+                result = MessageBox.Show("При попытке удаления вы не выделели ячейку данных, которую хотите удалить." + "\n" + "Повторите попытку ещё раз!", "Ошибка удаления данных", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             else
             {
+                MessageBoxResult result1 = MessageBox.Show("Вы действительно хотите совершить удаление?" + "\n" + "Выделенные вами данные будут удалены безвозвратно!", "Подтверждение удаления данных", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                if (result1 == MessageBoxResult.Yes)
+                {
+                    if (BookGrid.SelectedItems != null)
+                    {
+                        for (int i = 0; i < BookGrid.SelectedItems.Count; i++)
+                        {
+                            DataRowView datarowView = BookGrid.SelectedItems[i] as DataRowView;
+                            if (datarowView != null)
+                            {
+                                DataRow dataRow = (DataRow)datarowView.Row;
+                                dataRow.Delete();
+                            }
+                        }
+                    }
+                    UpdateDB();
+                }
+                else
+                {
 
+                }
             }
         }
 
@@ -246,22 +206,11 @@ namespace WpfApp1
             MainMenu.Visibility = Visibility.Visible;
         }
 
-        private void ReadButton_Click(object sender, RoutedEventArgs e)
-        {
-            ReadOrCreatMenu.Visibility = Visibility.Hidden;
-            DataBaseReadMenuAdmin.Visibility = Visibility.Visible;
-        }
-
-        private void BackReadOrCreatMenu_Click(object sender, RoutedEventArgs e)
-        {
-            ReadOrCreatMenu.Visibility = Visibility.Hidden;
-            MainMenu.Visibility = Visibility.Visible;
-        }
-
         private void EditorButton_Click(object sender, RoutedEventArgs e)
         {
             DataBaseReadMenuAdmin.Visibility = Visibility.Hidden;
             UpdateMenu.Visibility = Visibility.Visible;
+            
         }
 
         private void Button_Click_3(object sender, RoutedEventArgs e)
@@ -270,6 +219,38 @@ namespace WpfApp1
             CreateMenu.Visibility = Visibility.Visible;
         }
 
-        
+        private void BackUpdateMenu_Click(object sender, RoutedEventArgs e)
+        {
+            UpdateMenu.Visibility = Visibility.Hidden;
+            DataBaseReadMenuAdmin.Visibility = Visibility.Visible;
+        }
+
+        private void UpdateDB()
+        {
+            SqlCommandBuilder comandbuilder = new SqlCommandBuilder(adapter);
+            adapter.Update(libraryTable);
+        }
+
+        private void ConnectionDataComboBox(out SqlDataAdapter da, out DataSet ds, string NameDataBase)
+        {
+            da = new SqlDataAdapter("Select " + NameDataBase + " FROM " + NameDataBase, connection);
+            ds = new DataSet();
+            da.Fill(ds, NameDataBase);
+        }
+
+        public void Insert(string value, string table)
+        {
+            connection.Open();
+            SqlCommand  command = new SqlCommand("INSERT INTO " + table + " VALUES (" + value + ")", connection);
+            command.ExecuteNonQuery();
+            connection.Close();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            //var ((System.Data.DataRowView)AuthorComboBox.SelectedItem).Row.rowID
+            var id = dsAutors.Rows.IndexOf(((DataRowView)AuthorComboBox.SelectedItem).Row);
+            Insert(Convert.ToString(AuthorComboBox.SelectedIndex + 1) + ", " + Convert.ToString(GenreComboBox.SelectedIndex + 1) + ", " + Convert.ToString(PublisherComboBox.SelectedIndex +1) + ", '" + NameBookTextBox.Text + "'", "Book");
+        }
     }
 }
