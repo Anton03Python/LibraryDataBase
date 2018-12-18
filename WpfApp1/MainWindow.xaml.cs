@@ -44,37 +44,38 @@ namespace WpfApp1
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             SqlDataAdapter da;
-          
-            NameDataBase = "Book";            
-            ConnectionDataBase(NameDataBase);
+
+            ConnectionDataBase("Book");
             BookGrid.ItemsSource = libraryTable.DefaultView;
             BookGridUser.ItemsSource = libraryTable.DefaultView;
-            
 
-            NameDataBase = "Author";           
-            ConnectionDataBase(NameDataBase);
+            ConnectionDataBase("Author");
             AuthorGrid.ItemsSource = libraryTable.DefaultView;
             AuthorGridUser.ItemsSource = libraryTable.DefaultView;
-            ConnectionDataComboBox(out da, out ds, NameDataBase);
-             dsAutors = ds.Tables[0];
-            AuthorComboBox.ItemsSource = ds.Tables[0].DefaultView;
-            AuthorComboBox.DisplayMemberPath = ds.Tables[0].Columns[NameDataBase].ToString();
 
-            NameDataBase = "Genre";
-            ConnectionDataBase(NameDataBase);
+            
+            ConnectionDataComboBox(out da, out ds, "Author");
+            dsAutors = ds.Tables[0];
+            AuthorComboBox.ItemsSource = ds.Tables[0].DefaultView;
+            AuthorComboBox.DisplayMemberPath = ds.Tables[0].Columns["Author"].ToString();
+
+            ConnectionDataBase("Genre");
             GenreGrid.ItemsSource = libraryTable.DefaultView;
             GenreGridUser.ItemsSource = libraryTable.DefaultView;
-            ConnectionDataComboBox(out da, out ds, NameDataBase);
-            GenreComboBox.ItemsSource = ds.Tables[0].DefaultView;
-            GenreComboBox.DisplayMemberPath = ds.Tables[0].Columns[NameDataBase].ToString();
 
-            NameDataBase = "Publisher";
-            ConnectionDataBase(NameDataBase);
+            
+            ConnectionDataComboBox(out da, out ds, "Genre");
+            GenreComboBox.ItemsSource = ds.Tables[0].DefaultView;
+            GenreComboBox.DisplayMemberPath = ds.Tables[0].Columns["Genre"].ToString();
+
+            ConnectionDataBase("Publisher");
             PublisherGrid.ItemsSource = libraryTable.DefaultView;
             PublisherGridUser.ItemsSource = libraryTable.DefaultView;
-            ConnectionDataComboBox(out da, out ds, NameDataBase);
+
+            
+            ConnectionDataComboBox(out da, out ds, "Publisher");
             PublisherComboBox.ItemsSource = ds.Tables[0].DefaultView;
-            PublisherComboBox.DisplayMemberPath = ds.Tables[0].Columns[NameDataBase].ToString();
+            PublisherComboBox.DisplayMemberPath = ds.Tables[0].Columns["Publisher"].ToString();
         }
 
         private void ConnectionDataBase(string NameDataBase)
@@ -87,10 +88,10 @@ namespace WpfApp1
                 SqlCommand command = new SqlCommand(sql, connection);
                 adapter = new SqlDataAdapter(command);
                 // установка команды на добавление для вызова хранимой процедуры 
-                adapter.InsertCommand = new SqlCommand("sp_Insert"+NameDataBase, connection);
+                adapter.InsertCommand = new SqlCommand("sp_Insert" + NameDataBase, connection);
                 adapter.InsertCommand.CommandType = CommandType.StoredProcedure;
-                adapter.InsertCommand.Parameters.Add(new SqlParameter("@"+NameDataBase, SqlDbType.VarChar, 50, NameDataBase));
-                SqlParameter parameter = adapter.InsertCommand.Parameters.Add("@Id"+NameDataBase, SqlDbType.Int, 0, "Id"+NameDataBase);
+                adapter.InsertCommand.Parameters.Add(new SqlParameter("@" + NameDataBase, SqlDbType.VarChar, 50, NameDataBase));
+                SqlParameter parameter = adapter.InsertCommand.Parameters.Add("@Id" + NameDataBase, SqlDbType.Int, 0, "Id" + NameDataBase);
                 parameter.Direction = ParameterDirection.Output;
                 connection.Open();
                 adapter.Fill(libraryTable);
@@ -210,10 +211,10 @@ namespace WpfApp1
         {
             DataBaseReadMenuAdmin.Visibility = Visibility.Hidden;
             UpdateMenu.Visibility = Visibility.Visible;
-            
+
         }
 
-        private void Button_Click_3(object sender, RoutedEventArgs e)
+        private void CreateButtonInReadMenuAdmin_Click(object sender, RoutedEventArgs e)
         {
             DataBaseReadMenuAdmin.Visibility = Visibility.Hidden;
             CreateMenu.Visibility = Visibility.Visible;
@@ -241,16 +242,37 @@ namespace WpfApp1
         public void Insert(string value, string table)
         {
             connection.Open();
-            SqlCommand  command = new SqlCommand("INSERT INTO " + table + " VALUES (" + value + ")", connection);
+            SqlCommand command = new SqlCommand("INSERT INTO " + table + " VALUES (" + value + ")", connection);
             command.ExecuteNonQuery();
             connection.Close();
         }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
+        
+        public string Select(string ComboBoxText, string NameDataBase)
         {
-            //var ((System.Data.DataRowView)AuthorComboBox.SelectedItem).Row.rowID
-            var id = dsAutors.Rows.IndexOf(((DataRowView)AuthorComboBox.SelectedItem).Row);
-            Insert(Convert.ToString(AuthorComboBox.SelectedIndex + 1) + ", " + Convert.ToString(GenreComboBox.SelectedIndex + 1) + ", " + Convert.ToString(PublisherComboBox.SelectedIndex +1) + ", '" + NameBookTextBox.Text + "'", "Book");
+            DataSet dts = new DataSet();
+            SqlCommand command = new SqlCommand("SELECT Id" + NameDataBase + " FROM " + NameDataBase + " WHERE " + NameDataBase + "=" + "'" + ComboBoxText + "'" , connection);
+
+            using (SqlDataAdapter adapter = new SqlDataAdapter(command))
+            {
+                adapter.Fill(dts);
+            }
+            string id = dts.Tables[0].Rows[0][0].ToString();
+            return id;
+            
+        }
+
+        private void CreatMenuInUpdateMenu_Click(object sender, RoutedEventArgs e)
+        {
+            UpdateMenu.Visibility = Visibility.Hidden;
+            CreateMenu.Visibility = Visibility.Visible;
+        }
+
+        private void SaveButtonInUpdateMenu_Click(object sender, RoutedEventArgs e)
+        {
+            var idAuthor = Select(AuthorComboBox.Text, "Author");
+            var idGenre = Select(GenreComboBox.Text, "Genre");
+            var idPublisher = Select(PublisherComboBox.Text, "Publisher");
+            Insert(idAuthor + ", " + idGenre + ", " + idPublisher + ", '" + NameBookTextBox.Text + "'", "Book");
         }
     }
 }
