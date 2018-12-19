@@ -37,25 +37,7 @@
             <TextBlock HorizontalAlignment="Left" Margin="0,47,0,0" Grid.Row="2" TextWrapping="Wrap" Text="This program belongs to the library №6. All rights reserved. Developed by Python_dev" VerticalAlignment="Top" Height="22" Width="792" Grid.ColumnSpan="3" Foreground="#FFE1127F" FontSize="14"/>
 
         </Grid>
-        <Grid Name="ReadOrCreatMenu" Grid.RowSpan="2" Visibility="Hidden">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
-            <Button Name="BackReadOrCreatMenu" ToolTip="Назад" HorizontalAlignment="Left" Margin="334,10,0,0" VerticalAlignment="Top" Width="45" Height="39" Background="White" BorderBrush="White" Grid.Column="1" Click="BackReadOrCreatMenu_Click">
-                <Image Height="36" Source="C:\Users\Buinov\Source\Repos\LibraryDataBase\WpfApp1\Icons\icons8-стрелка-влево-в-круге-2-96.png" Stretch="Fill" Width="41"/>
-            </Button>
-            <Image Margin="10,0,321,357" Source="C:\Users\Buinov\Source\Repos\LibraryDataBase\WpfApp1\Icons\icons8-книги-96 (1).png" Stretch="Fill"/>
-            <Image Margin="80,0,242,357" Source="C:\Users\Buinov\Source\Repos\LibraryDataBase\WpfApp1\Icons\icons8-администратор-96.png" Stretch="Fill"/>
-            <TextBlock HorizontalAlignment="Left" Margin="0,387,0,0" TextWrapping="Wrap" Text="This program belongs to the library №6. All rights reserved. Developed by Python_dev" VerticalAlignment="Top" Height="22" Width="792" Foreground="#FFE1127F" FontSize="14" Grid.ColumnSpan="2"/>
-            <Button Name="ReadButton" ToolTip="Просмотр базы данных" Margin="242,150,20,0" VerticalAlignment="Top" Height="100" Background="White" BorderBrush="White" Foreground="White" Click="ReadButton_Click">
-                <Image Height="96" Source="C:\Users\Buinov\Source\Repos\LibraryDataBase\WpfApp1\Icons\icons8-открытая-книга-96.png" Stretch="Fill" Width="124"/>
-            </Button>
-            <Button Name="CreatButton" ToolTip="Добавление данных в таблицу" VerticalAlignment="Top" Grid.Column="1" Margin="20,150,240,0" Height="100" Background="White" BorderBrush="White" Foreground="White">
-                <Image Height="96" Source="C:\Users\Buinov\Source\Repos\LibraryDataBase\WpfApp1\Icons\icons8-добавить-96.png" Stretch="Fill" Width="133"/>
-            </Button>
-        </Grid>
-        <Grid Name="DataBaseReadMenuAdmin" Grid.RowSpan="2">
+        <Grid Name="DataBaseReadMenuAdmin" Grid.RowSpan="2" Visibility="Hidden">
             <Grid.RowDefinitions>
                 <RowDefinition Height="52*"/>
                 <RowDefinition Height="367*"/>
@@ -70,14 +52,11 @@
             <Button Name="DeletionButton" ToolTip="Удаление" Margin="670,0,0,6" VerticalAlignment="Bottom" Height="42" Click="Button_Click_2" HorizontalAlignment="Left" Width="45" Background="White" BorderBrush="White" Foreground="White" AutomationProperties.HelpText="Удалить" >
                 <Image Height="36" Source="C:\Users\Buinov\source\repos\WpfApp1\WpfApp1\Icons\icons8-удалить-96.png" Stretch="Fill" Width="41" RenderTransformOrigin="0.024,0.361"/>
             </Button>
-            <Button Name="Back" ToolTip="Назад" HorizontalAlignment="Left" Margin="720,4,0,0" VerticalAlignment="Top" Width="45" Height="42" Background="White" BorderBrush="White" Click="Back_Click">
+            <Button Name="Back" ToolTip="Назад" HorizontalAlignment="Left" Margin="720,0,0,6" VerticalAlignment="Bottom" Width="45" Height="42" Background="White" BorderBrush="White" Click="Back_Click">
                 <Image Height="36" Source="C:\Users\Buinov\Source\Repos\LibraryDataBase\WpfApp1\Icons\icons8-стрелка-влево-в-круге-2-96.png" Stretch="Fill" Width="41"/>
             </Button>
             <Button Name="EditorButton" ToolTip="Редактирование данных таблицы" Margin="620,0,0,6" HorizontalAlignment="Left" Width="45" Background="White" BorderBrush="White" Foreground="White" AutomationProperties.HelpText="Удалить" RenderTransformOrigin="-1,0.513" Click="EditorButton_Click" Height="42" VerticalAlignment="Bottom" >
                 <Image Height="36" Source="C:\Users\Buinov\Source\Repos\LibraryDataBase\WpfApp1\Icons\icons8-редактировать-96.png" Stretch="Fill" Width="41"/>
-            </Button>
-            <Button Name="CreateButtonInReadMenuAdmin" HorizontalAlignment="Left" Margin="570,4,0,0" VerticalAlignment="Top" Width="45" Height="42" Click="CreateButtonInReadMenuAdmin_Click" Background="White" BorderBrush="White">
-                <Image Source="C:\Users\Buinov\Source\Repos\LibraryDataBase\WpfApp1\Icons\icons8-добавить-96 (1).png" Stretch="Fill" Width="41" Height="36"/>
             </Button>
             <Image Margin="10,0,726,6" Source="C:\Users\Buinov\Source\Repos\LibraryDataBase\WpfApp1\Icons\icons8-книги-96 (1).png" Stretch="Fill"/>
             <DataGrid AutoGenerateColumns="False" HorizontalAlignment="Left" Height="324" Margin="200,10,0,0" VerticalAlignment="Top" Width="195" x:Name="AuthorGrid" Grid.Row="1">
@@ -133,7 +112,7 @@
             <Image Margin="10,0,717,362" Source="C:\Users\Buinov\Source\Repos\LibraryDataBase\WpfApp1\Icons\icons8-книги-96 (1).png" Stretch="Fill"/>
             <TextBlock HorizontalAlignment="Left" Margin="0,391,0,0" TextWrapping="Wrap" Text="This program belongs to the library №6. All rights reserved. Developed by Python_dev" VerticalAlignment="Top" Height="22" Width="792" Foreground="#FFE1127F" FontSize="14"/>
         </Grid>
-        <Grid Name="UpdateMenu" Grid.RowSpan="2" Visibility="Hidden">
+        <Grid Name="UpdateMenu" Grid.RowSpan="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="8*"/>
                 <ColumnDefinition Width="326*"/>
@@ -162,60 +141,31 @@
             <Button Name="SaveButtonInUpdateMenu" Grid.Column="1" HorizontalAlignment="Left" Margin="10,255,0,0" Grid.Row="2" Width="45" Height="39" VerticalAlignment="Top" Background="#FFF4F4F5" BorderBrush="#FFF4F4F5" Foreground="White" Click="SaveButtonInUpdateMenu_Click">
                 <Image Grid.Column="1" Grid.Row="2" Source="C:\Users\Buinov\Source\Repos\LibraryDataBase\WpfApp1\Icons\icons8-сохранить-96.png" Stretch="Fill" Height="36" Width="41"/>
             </Button>
-            <Button Name="CreatMenuInUpdateMenu"  Grid.Column="1" HorizontalAlignment="Left" Margin="85,255,0,0" Grid.Row="2" VerticalAlignment="Top" Width="45" Height="39" Background="#FFF4F4F5" BorderBrush="#FFF4F4F5" Click="CreatMenuInUpdateMenu_Click">
-                <Image Source="C:\Users\Buinov\Source\Repos\LibraryDataBase\WpfApp1\Icons\icons8-добавить-96 (1).png" Stretch="Fill" Width="41" Height="36"/>
-            </Button>
             <TextBlock HorizontalAlignment="Left" Margin="0,8,0,0" Grid.Row="3" TextWrapping="Wrap" Text="This program belongs to the library №6. All rights reserved. Developed by Python_dev" VerticalAlignment="Top" Height="22" Width="792" Grid.ColumnSpan="4" Foreground="#FFE1127F" FontSize="14"/>
-
-        </Grid>
-        <Grid Name="CreateMenu" Grid.RowSpan="2" Visibility="Hidden">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="10*"/>
-                <ColumnDefinition Width="377*"/>
-                <ColumnDefinition Width="9*"/>
-                <ColumnDefinition Width="396*"/>
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="50*"/>
-                <RowDefinition Height="10*"/>
-                <RowDefinition Height="298*"/>
-
-                <RowDefinition Height="50*"/>
-            </Grid.RowDefinitions>
-
-            <Rectangle Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="299" Grid.Row="2" Stroke="Black" VerticalAlignment="Top" Width="367" Grid.Column="1" Grid.RowSpan="2"/>
-            <DataGrid AutoGenerateColumns="False" Name="CreateMenuGrid" Grid.Column="3" HorizontalAlignment="Left" Height="299" Margin="10,0,0,0" Grid.Row="2" VerticalAlignment="Top" Width="102">
-                <DataGrid.Columns>
-                    <DataGridTextColumn Binding="{Binding Book}" Header="Книга" Width="100"/>
-                </DataGrid.Columns>
-            </DataGrid>
-
-            <Label Content="Название книги:" Grid.Column="1" HorizontalAlignment="Left" Margin="10,10,0,0" Grid.Row="2" VerticalAlignment="Top"/>
-            <TextBox Name="BookTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="10,41,0,0" Grid.Row="2" TextWrapping="Wrap" VerticalAlignment="Top" Width="200"/>
-            <Label Content="Жанр книги:" VerticalAlignment="Top" Grid.Column="1" Margin="10,128,287,0" Grid.Row="2"/>
-            <Label Content="Автор книги:" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="1" Margin="10,69,0,0" Grid.Row="2"/>
-            <TextBox Name="AuthorTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="10,100,0,0" Grid.Row="2" TextWrapping="Wrap" VerticalAlignment="Top" Width="200"/>
-            <TextBox Name="GenreTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="10,159,0,0" Grid.Row="2" TextWrapping="Wrap" VerticalAlignment="Top" Width="200"/>
-            <Label Content="Издатель книги:" Grid.Column="1" HorizontalAlignment="Left" Margin="10,187,0,0" Grid.Row="2" VerticalAlignment="Top"/>
-            <TextBox Name="PublisherTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="10,218,0,0" Grid.Row="2" TextWrapping="Wrap" VerticalAlignment="Top" Width="200"/>
-            <Button Content="Button" Grid.Column="1" HorizontalAlignment="Left" Margin="10,246,0,0" Grid.Row="2" VerticalAlignment="Top" Width="98" Height="42" Click="Button_Click_4"/>
-            <DataGrid Grid.Column="3" HorizontalAlignment="Left" Height="298" Margin="117,1,0,0" Grid.Row="2" VerticalAlignment="Top" Width="88">
-                <DataGrid.Columns>
-                    <DataGridTextColumn Binding="{Binding Author}" Header="Автор" Width="100"/>
-                </DataGrid.Columns>
-            </DataGrid>
-            <DataGrid Grid.Column="3" HorizontalAlignment="Left" Height="299" Margin="210,0,0,0" Grid.Row="2" VerticalAlignment="Top" Width="86">
-                <DataGrid.Columns>
-                    <DataGridTextColumn Binding="{Binding Genre}" Header="Жанр" Width="100"/>
-                </DataGrid.Columns>
-            </DataGrid>
-            <DataGrid Grid.Column="3" HorizontalAlignment="Left" Height="299" Margin="301,0,0,0" Grid.Row="2" VerticalAlignment="Top" Width="85">
-                <DataGrid.Columns>
-                    <DataGridTextColumn Binding="{Binding Publisher}" Header="Издатель" Width="100"/>
-                </DataGrid.Columns>
-            </DataGrid>
-            <TextBlock HorizontalAlignment="Left" Margin="0,30,0,0" TextWrapping="Wrap" Text="This program belongs to the library №6. All rights reserved. Developed by Python_dev" VerticalAlignment="Top" Height="22" Width="792" Foreground="#FFE1127F" FontSize="14" Grid.ColumnSpan="4" Grid.Row="3"/>
-
+            <Button Name="AddButtonAuthor" ToolTip="Добавить автора" Grid.Column="1" HorizontalAlignment="Left" Margin="135,100,0,0" Grid.Row="2" VerticalAlignment="Top" Width="25" Height="22" Background="#FFF4F4F5" BorderBrush="#FFF4F4F5" Click="AddButtonAuthor_Click">
+                <Image Grid.Column="1" Grid.Row="2" Source="C:\Users\Buinov\Source\Repos\LibraryDataBase\WpfApp1\Icons\icons8-добавить-96 (1).png" Stretch="Fill" Height="20" Width="22"/>
+            </Button>
+            <Button Name="AddButtonGenre" ToolTip="Добавить жанр" Grid.Column="1" HorizontalAlignment="Left" Margin="135,158,0,0" Grid.Row="2" VerticalAlignment="Top" Width="25" Height="22" Background="#FFF4F4F5" BorderBrush="#FFF4F4F5" Click="AddButtonGenre_Click">
+                <Image Grid.Column="1" Grid.Row="2" Source="C:\Users\Buinov\Source\Repos\LibraryDataBase\WpfApp1\Icons\icons8-добавить-96 (1).png" Stretch="Fill" Height="20" Width="22"/>
+            </Button>
+            <Button Name="AddButtonPublisher" ToolTip="Добавить издателя" Grid.Column="1" HorizontalAlignment="Left" Margin="135,216,0,0" Grid.Row="2" VerticalAlignment="Top" Width="25" Height="22" Background="#FFF4F4F5" BorderBrush="#FFF4F4F5" Click="AddButtonPublisher_Click">
+                <Image Grid.Column="1" Grid.Row="2" Source="C:\Users\Buinov\Source\Repos\LibraryDataBase\WpfApp1\Icons\icons8-добавить-96 (1).png" Stretch="Fill" Height="20" Width="22"/>
+            </Button>
+            <TextBox Name="AuthorTextBox"  Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="135,100,0,0" Grid.Row="2" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+            <Button Name="HideButtonAuthorTextBox" ToolTip="Скрыть" Grid.Column="1" HorizontalAlignment="Left" Margin="255,100,0,0" Grid.Row="2" VerticalAlignment="Top" Width="25" Height="23" Background="White" BorderBrush="#FFABADB3" Click="HideButtonAuthorTextBox_Click">
+                <Image Source="C:\Users\Buinov\Source\Repos\LibraryDataBase\WpfApp1\Icons\icons8-минус-64.png" Stretch="Fill" Height="21" Width="22"/>
+            </Button>
+            <TextBox Name="GenreTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="135,158,0,0" Grid.Row="2" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+            <Button Name="HideButtonGenreTextBox" ToolTip="Скрыть" Grid.Column="1" HorizontalAlignment="Left" Margin="255,158,0,0" Grid.Row="2" VerticalAlignment="Top" Width="25" Height="23" Background="White" BorderBrush="#FFABADB3" Click="HideButtonGenreTextBox_Click">
+                <Image Source="C:\Users\Buinov\Source\Repos\LibraryDataBase\WpfApp1\Icons\icons8-минус-64.png" Stretch="Fill" Height="21" Width="22"/>
+            </Button>
+            <TextBox Name="PublisherTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="135,216,0,0" Grid.Row="2" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+            <Button Name="HideButtonPublisherTextBox" ToolTip="Скрыть" Grid.Column="1" HorizontalAlignment="Left" Margin="255,216,0,0" Grid.Row="2" VerticalAlignment="Top" Width="25" Height="23" Background="White" BorderBrush="#FFABADB3" Click="HideButtonPublisherTextBox_Click">
+                <Image Source="C:\Users\Buinov\Source\Repos\LibraryDataBase\WpfApp1\Icons\icons8-минус-64.png" Stretch="Fill" Height="21" Width="22"/>
+            </Button>
+            <Button Name="AddButton" Grid.Column="1" HorizontalAlignment="Left" Margin="135,255,0,0" Grid.Row="2" Width="45" Height="39" VerticalAlignment="Top" Background="#FFF4F4F5" BorderBrush="#FFF4F4F5" Foreground="White" Visibility="Hidden" Click="AddButton_Click">
+                <Image  Source="C:\Users\Buinov\Source\Repos\LibraryDataBase\WpfApp1\Icons\icons8-добавить-базу-данных-96.png" Stretch="Fill" Height="36" Width="41"/>
+            </Button>
         </Grid>
     </Grid>
 </Window>

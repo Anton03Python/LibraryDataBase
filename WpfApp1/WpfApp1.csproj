@@ -140,5 +140,11 @@
   <ItemGroup>
     <Resource Include="Icons\icons8-добавить-96 %281%29.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\icons8-минус-64.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\icons8-добавить-базу-данных-96.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
