@@ -43,6 +43,11 @@ namespace WpfApp1
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            ConnectDataTableAndComboBox();
+        }
+
+        private void ConnectDataTableAndComboBox()
+        {
             SqlDataAdapter da;
 
             ConnectionDataBase("Book");
@@ -158,6 +163,42 @@ namespace WpfApp1
                             }
                         }
                     }
+                    else if (AuthorGrid.SelectedItems != null)
+                    {
+                        for (int i = 0; i < AuthorGrid.SelectedItems.Count; i++)
+                        {
+                            DataRowView datarowView = AuthorGrid.SelectedItems[i] as DataRowView;
+                            if (datarowView != null)
+                            {
+                                DataRow dataRow = (DataRow)datarowView.Row;
+                                dataRow.Delete();
+                            }
+                        }
+                    }
+                    else if (GenreGrid.SelectedItems != null)
+                    {
+                        for (int i = 0; i < GenreGrid.SelectedItems.Count; i++)
+                        {
+                            DataRowView datarowView = GenreGrid.SelectedItems[i] as DataRowView;
+                            if (datarowView != null)
+                            {
+                                DataRow dataRow = (DataRow)datarowView.Row;
+                                dataRow.Delete();
+                            }
+                        }
+                    }
+                    else if (PublisherGrid.SelectedItems != null)
+                    {
+                        for (int i = 0; i < PublisherGrid.SelectedItems.Count; i++)
+                        {
+                            DataRowView datarowView = PublisherGrid.SelectedItems[i] as DataRowView;
+                            if (datarowView != null)
+                            {
+                                DataRow dataRow = (DataRow)datarowView.Row;
+                                dataRow.Delete();
+                            }
+                        }
+                    }
                     UpdateDB();
                 }
                 else
@@ -249,15 +290,97 @@ namespace WpfApp1
 
         private void SaveButtonInUpdateMenu_Click(object sender, RoutedEventArgs e)
         {
-            var idAuthor = Select(AuthorComboBox.Text, "Author");
-            var idGenre = Select(GenreComboBox.Text, "Genre");
-            var idPublisher = Select(PublisherComboBox.Text, "Publisher");
-            Insert(idAuthor + ", " + idGenre + ", " + idPublisher + ", '" + NameBookTextBox.Text + "'", "Book");
+            if (NameBookTextBox.Text == "")
+            {
+                MessageBoxResult result = MessageBox.Show("В поле для ввода названия книги нет никаких введённых данных!" + "\n" + "Пожалуйста повторите попытку ещё раз.", "Ошибка ввода данных", MessageBoxButton.OK, MessageBoxImage.Error);
+                if (result == MessageBoxResult.OK)
+                {
+
+                }
+            }
+            else if (NameBookTextBox.Text != "")
+            {
+                string idAuthor, idGenre, idPublisher;
+                idComboBox(out idAuthor, out idGenre, out idPublisher);
+                if (AuthorTextBox.Visibility == Visibility.Visible && GenreTextBox.Visibility == Visibility.Hidden && PublisherTextBox.Visibility == Visibility.Hidden)
+                {
+                    Insert("'" + AuthorTextBox.Text + "'", "Author");
+                    var idAuthorTextBox = Select(AuthorTextBox.Text, "Author");
+
+                    idComboBox(out idAuthor, out idGenre, out idPublisher);
+                    Insert("'" + idAuthorTextBox + "'" + ", '" + idGenre + "'" + ", '" + idPublisher + "'" + ", '" + NameBookTextBox.Text + "'", "Book");
+                }
+                else if (AuthorTextBox.Visibility == Visibility.Hidden && GenreTextBox.Visibility == Visibility.Visible && PublisherTextBox.Visibility == Visibility.Visible)
+                {
+                    idComboBox(out idAuthor, out idGenre, out idPublisher);
+                    Insert("'" + GenreTextBox.Text + "'", "Genre");
+                    var idGenreTextBox = Select(GenreTextBox.Text, "Genre");
+
+                    Insert("'" + PublisherTextBox.Text + "'", "Publisher");
+                    var idPublisherTextBox = Select(PublisherTextBox.Text, "Publisher");
+
+                    Insert("'" + idAuthor + "'" + ", '" + idGenreTextBox + "'" + ", '" + idPublisherTextBox + "'" + NameBookTextBox.Text + "'", "Book");
+                }
+                if (GenreTextBox.Visibility == Visibility.Visible && AuthorTextBox.Visibility == Visibility.Hidden && PublisherTextBox.Visibility == Visibility.Hidden)
+                {
+                    Insert("'" + GenreTextBox.Text + "'", "Genre");
+                    var idGenreTextBox = Select(GenreTextBox.Text, "Genre");
+
+                    idComboBox(out idAuthor, out idGenre, out idPublisher);
+                    Insert("'" + idGenreTextBox + "'" + ", '" + idAuthor + "'" + ", '" + idPublisher + "'" + ", '" + NameBookTextBox.Text + "'", "Book");
+                }
+                else if (GenreTextBox.Visibility == Visibility.Hidden && AuthorTextBox.Visibility == Visibility.Visible && PublisherTextBox.Visibility == Visibility.Visible)
+                {
+                    idComboBox(out idAuthor, out idGenre, out idPublisher);
+                    Insert("'" + AuthorTextBox.Text + "'", "Author");
+                    var idAuthorTextBox = Select(AuthorTextBox.Text, "Author");
+                    Insert("'" + PublisherTextBox.Text + "'", "Publisher");
+                    var idPublisherTextBox = Select(PublisherTextBox.Text, "Publisher");
+                    Insert("'" + idGenre + "'" + ", '" + idAuthorTextBox + "'" + ", '" + idPublisherTextBox + "'" + NameBookTextBox.Text + "'", "Book");
+                }
+                if (PublisherTextBox.Visibility == Visibility.Visible && AuthorTextBox.Visibility == Visibility.Hidden && GenreTextBox.Visibility == Visibility.Hidden)
+                {
+                    Insert("'" + PublisherTextBox.Text + "'", "Publisher");
+                    var idPublisherTextBox = Select(PublisherTextBox.Text, "Publisher");
+                    idComboBox(out idAuthor, out idGenre, out idPublisher);
+                    Insert("'" + idPublisherTextBox + "'" + ", '" + idAuthor + "'" + ", '" + idGenre + "'" + ", '" + NameBookTextBox.Text + "'", "Book");
+                }
+                else if (PublisherTextBox.Visibility == Visibility.Hidden && AuthorTextBox.Visibility == Visibility.Visible && GenreTextBox.Visibility == Visibility.Visible)
+                {
+                    Insert("'" + AuthorTextBox.Text + "'", "Author");
+                    var idAuthorTextBox = Select(AuthorTextBox.Text, "Author");
+                    Insert("'" + GenreTextBox.Text + "'", "Genre");
+                    var idGenreTextBox = Select(GenreTextBox.Text, "Genre");
+                    idComboBox(out idAuthor, out idGenre, out idPublisher);
+                    Insert("'" + idPublisher + "'" + ", '" + idAuthorTextBox + "'" + ", '" + idGenreTextBox + "'" + ", '" + NameBookTextBox.Text + "'", "Book");
+                }
+                if (AuthorTextBox.Visibility == Visibility.Visible && GenreTextBox.Visibility == Visibility.Visible && PublisherTextBox.Visibility == Visibility.Visible)
+                {
+                    Insert("'" + AuthorTextBox.Text + "'", "Author");
+                    var idAuthorTextBox = Select(AuthorTextBox.Text, "Author");
+
+                    Insert("'" + GenreTextBox.Text + "'", "Genre");
+                    var idGenreTextBox = Select(GenreTextBox.Text, "Genre");
+
+                    Insert("'" + PublisherTextBox.Text + "'", "Publisher");
+                    var idPublisherTextBox = Select(PublisherTextBox.Text, "Publisher");
+
+                    Insert("'" + idAuthorTextBox + "'" + ", '" + idGenreTextBox + "'" + ", '" + idPublisherTextBox + "'" + ", '" + NameBookTextBox.Text + "'", "Book");
+                }
+                else if (AuthorTextBox.Visibility == Visibility.Hidden && GenreTextBox.Visibility == Visibility.Hidden && PublisherTextBox.Visibility == Visibility.Hidden)
+                {
+                    idComboBox(out idAuthor, out idGenre, out idPublisher);
+                    Insert("'" + idAuthor + "'" + ", '" + idGenre + "'" + ", '" + idPublisher + "'" + ", '" + NameBookTextBox.Text + "'", "Book");
+                }
+                ConnectDataTableAndComboBox();
+            }
         }
 
-        private void SaveButtonInCreateMenu_Click(object sender, RoutedEventArgs e)
+        private void idComboBox(out string idAuthor, out string idGenre, out string idPublisher)
         {
-            
+            idAuthor = Select(AuthorComboBox.Text, "Author");
+            idGenre = Select(GenreComboBox.Text, "Genre");
+            idPublisher = Select(PublisherComboBox.Text, "Publisher");
         }
 
         private void AddButtonAuthor_Click(object sender, RoutedEventArgs e)
@@ -265,13 +388,6 @@ namespace WpfApp1
             AddButtonAuthor.Visibility = Visibility.Hidden;
             AuthorTextBox.Visibility = Visibility.Visible;
             HideButtonAuthorTextBox.Visibility = Visibility.Visible;
-            if (AddButton.Visibility == Visibility.Visible)
-            {
-
-            }
-            else
-            AddButton.Visibility = Visibility.Visible;
-
         }
 
         private void AddButtonGenre_Click(object sender, RoutedEventArgs e)
@@ -279,12 +395,6 @@ namespace WpfApp1
             AddButtonGenre.Visibility = Visibility.Hidden;
             GenreTextBox.Visibility = Visibility.Visible;
             HideButtonGenreTextBox.Visibility = Visibility.Visible;
-            if (AddButton.Visibility == Visibility.Visible)
-            {
-
-            } 
-            else
-            AddButton.Visibility = Visibility.Visible;
         }
 
         private void AddButtonPublisher_Click(object sender, RoutedEventArgs e)
@@ -292,12 +402,6 @@ namespace WpfApp1
             AddButtonPublisher.Visibility = Visibility.Hidden;
             PublisherTextBox.Visibility = Visibility.Visible;
             HideButtonPublisherTextBox.Visibility = Visibility.Visible;
-            if (AddButton.Visibility == Visibility.Visible)
-            {
-
-            }
-            else
-            AddButton.Visibility = Visibility.Visible;
         }
 
         private void HideButtonAuthorTextBox_Click(object sender, RoutedEventArgs e)
@@ -305,12 +409,6 @@ namespace WpfApp1
             HideButtonAuthorTextBox.Visibility = Visibility.Hidden;
             AuthorTextBox.Visibility = Visibility.Hidden;
             AddButtonAuthor.Visibility = Visibility.Visible;
-            if (HideButtonAuthorTextBox.Visibility == Visibility.Hidden && HideButtonGenreTextBox.Visibility == Visibility.Hidden && HideButtonPublisherTextBox.Visibility == Visibility.Hidden)
-                AddButton.Visibility = Visibility.Hidden;
-            else
-            {
-
-            }
         }
 
         private void HideButtonGenreTextBox_Click(object sender, RoutedEventArgs e)
@@ -318,12 +416,6 @@ namespace WpfApp1
             HideButtonGenreTextBox.Visibility = Visibility.Hidden;
             GenreTextBox.Visibility = Visibility.Hidden;
             AddButtonGenre.Visibility = Visibility.Visible;
-            if (HideButtonAuthorTextBox.Visibility == Visibility.Hidden && HideButtonGenreTextBox.Visibility == Visibility.Hidden && HideButtonPublisherTextBox.Visibility == Visibility.Hidden)
-                AddButton.Visibility = Visibility.Hidden;
-            else
-            {
-
-            }
         }
 
         private void HideButtonPublisherTextBox_Click(object sender, RoutedEventArgs e)
@@ -331,56 +423,13 @@ namespace WpfApp1
             HideButtonPublisherTextBox.Visibility = Visibility.Hidden;
             PublisherTextBox.Visibility = Visibility.Hidden;
             AddButtonPublisher.Visibility = Visibility.Visible;
-            if (HideButtonAuthorTextBox.Visibility == Visibility.Hidden && HideButtonGenreTextBox.Visibility == Visibility.Hidden && HideButtonPublisherTextBox.Visibility == Visibility.Hidden)
-                AddButton.Visibility = Visibility.Hidden;
-            else
-            {
-
-            }
         }
 
-        private void AddButton_Click(object sender, RoutedEventArgs e)
+        private void ReadTabel_Click(object sender, RoutedEventArgs e)
         {
-            connection = new SqlConnection(connectionString);
-            if (NameBookTextBox.Text == "" && AuthorTextBox.Text == "" && GenreTextBox.Text == "" && PublisherTextBox.Text == "")
-            {
-                MessageBoxResult result = MessageBox.Show("Нет ни одного введенного значения!" + "\n" + "Повторите попытку ещё раз", "Ошибка ввода данных", MessageBoxButton.OK, MessageBoxImage.Error);
-                if (result == MessageBoxResult.OK)
-                {
+            DataBaseReadMenuAdmin.Visibility = Visibility.Hidden;
+            ReadTableMenu.Visibility = Visibility.Visible;
 
-                }
-            }
-            if(AuthorTextBox.Text == "")
-            {
-
-            }
-            else
-                Insert("'" + AuthorTextBox.Text + "'", "Author");
-            if(GenreTextBox.Text == "")
-            {
-
-            }
-            else
-                Insert("'" + GenreTextBox.Text + "'", "Genre");
-            if(PublisherTextBox.Text == "")
-            {
-
-            }
-            else
-                Insert("'" + PublisherTextBox.Text + "'", "Publisher");
-        }
-
-        private void NewMethod(string NameDataBase)
-        {
-            connection = new SqlConnection(connectionString);
-            adapter.InsertCommand = new SqlCommand("sp_Insert" + NameDataBase, connection);
-            adapter.InsertCommand.CommandType = CommandType.StoredProcedure;
-            adapter.InsertCommand.Parameters.Add("@"+NameDataBase, SqlDbType.VarChar).Value = NameBookTextBox.Text;
-            connection.Open();
-            adapter.InsertCommand.ExecuteNonQuery();
-            connection.Close();
-            UpdateDB();
-            
         }
     }
 }
