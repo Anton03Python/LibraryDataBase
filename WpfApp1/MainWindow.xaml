@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfApp1"
         mc:Ignorable="d"
-        Title="Library database" ResizeMode="CanMinimize" Height="450" Width="800" Icon="C:\Users\Buinov\source\repos\WpfApp1\WpfApp1\Icons\icons8-библиотека-96 (1).png" Loaded="Window_Loaded">
+        Title="Library database" ResizeMode="CanMinimize" Height="450" Width="800" Icon="Icons\icons8-библиотека-96 (1).png" Loaded="Window_Loaded">
     <Grid >
         <Grid.RowDefinitions>
             <RowDefinition Height="49*"/>
