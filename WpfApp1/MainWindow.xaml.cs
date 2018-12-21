@@ -52,20 +52,22 @@ namespace WpfApp1
 
             ConnectionDataBase("Book");
             BookGrid.ItemsSource = libraryTable.DefaultView;
-            BookGridUser.ItemsSource = libraryTable.DefaultView;
-
+            
             ConnectionDataBase("Author");
             AuthorGrid.ItemsSource = libraryTable.DefaultView;
-            AuthorGridUser.ItemsSource = libraryTable.DefaultView;
-
+            
             ConnectionDataBase("Genre");
             GenreGrid.ItemsSource = libraryTable.DefaultView;
-            GenreGridUser.ItemsSource = libraryTable.DefaultView;
-
+            
             ConnectionDataBase("Publisher");
             PublisherGrid.ItemsSource = libraryTable.DefaultView;
-            PublisherGridUser.ItemsSource = libraryTable.DefaultView;
             da = ConnectionComboBox();
+
+            SqlDataAdapter adapter = new SqlDataAdapter("SELECT Author.Author AS 'Автор', Genre.Genre AS 'Жанр', Publisher.Publisher AS 'Издатель', Book AS 'Книга' FROM Book  INNER JOIN Genre ON Book.IdGenre = Genre.IdGenre INNER JOIN Author ON Book.IdAuthor = Author.IdAuthor INNER JOIN Publisher ON Book.IdPublisher = Publisher.IdPublisher", connection);
+            DataTable ds = new DataTable();
+            adapter.Fill(ds);
+            ReadTableGrid.ItemsSource = ds.DefaultView;
+            ReadTableInUserMenu.ItemsSource = ds.DefaultView;
         }
 
         private SqlDataAdapter ConnectionComboBox()
@@ -429,7 +431,13 @@ namespace WpfApp1
         {
             DataBaseReadMenuAdmin.Visibility = Visibility.Hidden;
             ReadTableMenu.Visibility = Visibility.Visible;
+                      
+        }    
 
+        private void BackButtonInReadTableMenu_Click(object sender, RoutedEventArgs e)
+        {
+            ReadTableMenu.Visibility = Visibility.Hidden;
+            DataBaseReadMenuAdmin.Visibility = Visibility.Visible;
         }
     }
 }
