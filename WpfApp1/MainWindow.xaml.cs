@@ -165,7 +165,7 @@ namespace WpfApp1
                             }
                         }
                     }
-                    else if (AuthorGrid.SelectedItems != null)
+                    if (AuthorGrid.SelectedItems != null)
                     {
                         for (int i = 0; i < AuthorGrid.SelectedItems.Count; i++)
                         {
@@ -177,7 +177,7 @@ namespace WpfApp1
                             }
                         }
                     }
-                    else if (GenreGrid.SelectedItems != null)
+                    if (GenreGrid.SelectedItems != null)
                     {
                         for (int i = 0; i < GenreGrid.SelectedItems.Count; i++)
                         {
@@ -189,7 +189,7 @@ namespace WpfApp1
                             }
                         }
                     }
-                    else if (PublisherGrid.SelectedItems != null)
+                    if (PublisherGrid.SelectedItems != null)
                     {
                         for (int i = 0; i < PublisherGrid.SelectedItems.Count; i++)
                         {
